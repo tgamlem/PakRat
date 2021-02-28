@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1019935243604",
+    "firebase_url": "https://pakrat-946b6-default-rtdb.firebaseio.com",
+    "project_id": "pakrat-946b6",
+    "storage_bucket": "pakrat-946b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019935243604:android:fafc516fed36277b891cc1",
+        "android_client_info": {
+          "package_name": "com.cs378h.PakRat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019935243604-9s0o4vv5vlvk86kaha8m5tuplq973nce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQdTdq7aFf86x8FKIMZnpmpQtJJ_XUtXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019935243604-9s0o4vv5vlvk86kaha8m5tuplq973nce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
