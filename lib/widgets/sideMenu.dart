@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+import '../paks.dart';
+
 class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -15,23 +18,31 @@ class SideMenu extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.green,
               image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage('img/logo.png')
-              ),
+                  fit: BoxFit.fill, image: AssetImage('img/logo.png')),
             ),
           ),
-            ListTile(
-              leading: Icon(Icons.input),
-              title: Text('Welcome'),
-              onTap: () => {},
-            ),
-            ListTile(
-              leading: Icon(Icons.set_meal_outlined),
-              title: Text('Paks'),
-              onTap: () => {},
-            ),
+          ListTile(
+            leading: Icon(Icons.input),
+            title: Text('Home'),
+            onTap: () => {
+              navigateToHome(context)
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.set_meal_outlined),
+            title: Text('Paks'),
+            onTap: () => {navigateToPaks(context)},
+          ),
         ],
       ),
     );
   }
+}
+
+Future navigateToHome(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+}
+
+Future navigateToPaks(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks()));
 }
