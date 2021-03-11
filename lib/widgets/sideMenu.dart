@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:hexcolor/hexcolor.dart';
+import '../login.dart';
 import '../main.dart';
 import '../paks.dart';
 
@@ -12,13 +13,13 @@ class SideMenu extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             child: Text(
-              'Side Menu',
-              style: TextStyle(color: Colors.white, fontSize: 24),
+              'PakRat',
+              style: TextStyle(color: HexColor("757575"), fontSize: 24),
             ),
             decoration: BoxDecoration(
-              color: Colors.green,
-              image: DecorationImage(
-                  fit: BoxFit.fill, image: AssetImage('img/logo.png')),
+              color: HexColor("d7ccc8"),
+              // image: DecorationImage(
+              //     fit: BoxFit.fill, image: AssetImage('img/logo.png')),
             ),
           ),
           ListTile(
@@ -32,7 +33,7 @@ class SideMenu extends StatelessWidget {
             children: [
               ListTile(
                 title: Text('Books'),
-                onTap: () => {navigateToPaks(context)},
+                onTap: () => {navigateToLogin(context)},
               ),
               ListTile(
                 title: Text('Movies'),
@@ -56,4 +57,8 @@ Future navigateToHome(context) async {
 
 Future navigateToPaks(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Paks()));
+}
+
+Future navigateToLogin(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
 }
