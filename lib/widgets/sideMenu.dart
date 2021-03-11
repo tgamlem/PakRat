@@ -22,16 +22,27 @@ class SideMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.input),
+            leading: Icon(Icons.home),
             title: Text('Home'),
-            onTap: () => {
-              navigateToHome(context)
-            },
+            onTap: () => {navigateToHome(context)},
           ),
-          ListTile(
-            leading: Icon(Icons.set_meal_outlined),
+          ExpansionTile(
+            leading: Icon(Icons.toc_rounded),
             title: Text('Paks'),
-            onTap: () => {navigateToPaks(context)},
+            children: [
+              ListTile(
+                title: Text('Books'),
+                onTap: () => {navigateToPaks(context)},
+              ),
+              ListTile(
+                title: Text('Movies'),
+                onTap: () => {navigateToHome(context)},
+              ),
+              ListTile(
+                title: Text('Coins'),
+                onTap: () => {navigateToPaks(context)},
+              ),
+            ],
           ),
         ],
       ),
