@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
+  Auther ath = new Auther();
+  String username = "";
+  String password = "";
+  String id = "";
   @override
   Widget build(BuildContext context) {
-    Auther ath = new Auther();
-    String username = "";
-    String password = "";
     return Scaffold(
       drawer: SideMenu(),
       appBar: AppBar(title: Text('Login')),
@@ -16,8 +17,12 @@ class Login extends StatelessWidget {
           child: Column(
         children: [
           ElevatedButton(
-            child: Text('log in'),
+            child: Text('sign up'),
             onPressed: () => ath.register(username, password),
+          ),
+          ElevatedButton(
+            child: Text('sign in'),
+            onPressed: () => ath.signIn(username, password),
           ),
           TextField(
             decoration: InputDecoration(
@@ -34,7 +39,7 @@ class Login extends StatelessWidget {
             obscureText: true,
             onChanged: (value) => password = value,
           ),
-          Text(ath.getId()),
+          Text("$id"),
         ],
       )),
     );
@@ -51,14 +56,14 @@ class Auther {
 
   void initialize() {
     instance = FirebaseAuth.instance;
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        print("no user");
-      } else {
-        print("user exists");
-        print(user.toString());
-      }
-    });
+    // FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    //   if (user == null) {
+    //     print("no user yet");
+    //   } else {
+    //     print("user exists");
+    //     print(user.toString());
+    //   }
+    // });
   }
 
   String getId() {
@@ -78,6 +83,17 @@ class Auther {
       } else if (e.code == 'email-already-in-use') {
         print("email already exists");
       }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void signIn(email, password) async {
+    try {
+      user = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      print(e);
     } catch (e) {
       print(e);
     }
