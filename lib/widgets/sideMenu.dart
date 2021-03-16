@@ -23,6 +23,10 @@ class SideMenu extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.login),
+            title: Text('Login'),
+            onTap: () => {navigateToLogin(context)}),
+          ListTile(
             leading: Icon(Icons.home),
             title: Text('Home'),
             onTap: () => {navigateToHome(context)},
@@ -33,11 +37,11 @@ class SideMenu extends StatelessWidget {
             children: [
               ListTile(
                 title: Text('Books'),
-                onTap: () => {navigateToLogin(context)},
+                onTap: () => {navigateToPaks(context)},
               ),
               ListTile(
                 title: Text('Movies'),
-                onTap: () => {navigateToHome(context)},
+                onTap: () => {navigateToPaks(context)},
               ),
               ListTile(
                 title: Text('Coins'),

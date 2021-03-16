@@ -14,30 +14,50 @@ class Login extends StatelessWidget {
       drawer: SideMenu(),
       appBar: AppBar(title: Text('Login')),
       body: Center(
-          child: Column(
+        child: Column(
         children: [
-          ElevatedButton(
-            child: Text('sign up'),
-            onPressed: () => ath.register(username, password),
+          Padding(padding: EdgeInsets.fromLTRB(10, 50, 10, 0),
+            child: 
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "username",
+                ),
+                onChanged: (value) => username = value,
+              ),
           ),
-          ElevatedButton(
-            child: Text('sign in'),
-            onPressed: () => ath.signIn(username, password),
-          ),
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "username",
-            ),
-            onChanged: (value) => username = value,
-          ),
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: "password",
-            ),
-            obscureText: true,
-            onChanged: (value) => password = value,
+          Padding(padding: EdgeInsets.fromLTRB(10, 16, 10, 10),
+            child: 
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "password",
+                ),
+                obscureText: true,
+                onChanged: (value) => password = value,
+              ),
+          ),   
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 8, 6, 0),
+                child: 
+                  ElevatedButton(
+                    child: Text('sign up'),
+                    onPressed: () => ath.register(username, password),
+                  ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(6, 8, 0, 0),
+                child: 
+                  ElevatedButton(
+                    child: Text('log in'),
+                    onPressed: () => ath.signIn(username, password),
+                  ),
+              ),
+              
+            ],
           ),
           Text("$id"),
         ],
