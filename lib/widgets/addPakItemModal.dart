@@ -57,6 +57,7 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
                     Navigator.of(context).pop();
                   },
                   child: Text("ADD", style: TextStyle(fontSize: 16)),
+                  // TODO: have this button add the new item to the database and make sure it displays on the paks screen
                 ),
               ),
             ],

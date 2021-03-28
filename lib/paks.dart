@@ -61,7 +61,7 @@ class Paks extends StatelessWidget {
                         barrierDismissible: true,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Delete task?",
+                            title: Text("Delete task?\n(This action will permanately delete this item)",
                               //style: GoogleFonts.openSans()
                             ),
                             actions: <Widget>[
@@ -70,6 +70,7 @@ class Paks extends StatelessWidget {
                                 child: Text("Delete"),
                                 onPressed: () {
                                   Navigator.of(context).pop(true);
+                                  // TODO: have this button also delete from the database
                                 },
                               ),
                               // button to cancel deleting
