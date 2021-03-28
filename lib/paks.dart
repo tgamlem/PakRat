@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:PakRat/widgets/pakModal.dart';
+import 'package:PakRat/widgets/addPakItemModal.dart';
 
 // Learned about FutureBuilder here: https://flutterigniter.com/build-widget-with-async-method-call/
 
@@ -18,35 +21,97 @@ class Paks extends StatelessWidget {
         future: readFromDatabase(),
         builder: (contect, data) {
           if (data.data == null)
+            // return Image(image: AssetImage('img\Pakrat_White.png'));
             return CircularProgressIndicator();
           else {
             return Scaffold(
-                drawer: SideMenu(),
-                appBar: AppBar(
-                  title: Text('Paks'),
-                ),
-                body: ListView(
-                  children: [
-                    for (final widget in data.data ?? [])
-                      //Text(widget.title)
-                      GestureDetector(
-                        child: Card(
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(widget.title,
-                                    style: TextStyle(fontSize: 36))
-                              ],
+              drawer: SideMenu(),
+              appBar: AppBar(
+                title: Text('Paks'),
+              ),
+              body: Padding(
+                  padding: EdgeInsets.fromLTRB(10, 14, 10, 14),
+                  child: ListView(
+                    children: [
+                      for (final widget in data.data ?? [])
+                        //Text(widget.title)
+                        GestureDetector(
+                          child: Dismissible(
+                            key: Key(widget.title),
+                            child: Card(
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(widget.title,
+                                        style: TextStyle(fontSize: 36))
+                                  ],
+                                ),
+                              ),
                             ),
+                            background: Container(
+                              padding: EdgeInsets.only(left: 12),
+                              child: Icon(Icons.delete),
+                              alignment: Alignment.centerLeft,
+                              color: Colors.red[700],
+                            ),
+                            confirmDismiss: (dismissDirection) {
+                              return showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Delete task?",
+                              //style: GoogleFonts.openSans()
+                            ),
+                            actions: <Widget>[
+                              // button to confirm delete
+                              TextButton(
+                                child: Text("Delete"),
+                                onPressed: () {
+                                  Navigator.of(context).pop(true);
+                                },
+                              ),
+                              // button to cancel deleting
+                              TextButton(
+                                child: Text("Cancel"),
+                                onPressed: () {
+                                  Navigator.of(context).pop(false);
+                                },
+                              )
+                            ],
+                          );
+                        }
+                      );
+                            },
                           ),
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return PakModal(
+                                  widget.title,
+                                  widget.description,
+                                );
+                              }
+                            );
+                          },
                         ),
-                        onTap: () {
-                          print("I was tapped");
-                        },
-                      ),
-                  ],
-                ));
+                    ],
+                  )),
+              floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.add),
+                backgroundColor: HexColor("bbdefb"),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AddPakItemModal();
+                    }
+                  );
+                },
+              ),
+            );
           }
         });
     // return Scaffold(
