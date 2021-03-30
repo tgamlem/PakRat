@@ -102,8 +102,11 @@ class PakData {
     dataItems.add(item);
   }
 
-  removeItem(PakDataItem item) {
-    dataItems.remove(item);
+  removeItem(PakDataItem itemToRemove) {
+    for (var item in dataItems) {
+      if (itemToRemove.title == item.title && itemToRemove.value == item.value)
+        dataItems.remove(item);
+    }
   }
 
   String toJson() {
