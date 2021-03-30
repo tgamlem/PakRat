@@ -1,16 +1,27 @@
+import 'package:PakRat/paks.dart';
 import 'package:PakRat/widgets/pakModal.dart';
 import "package:flutter/material.dart";
+import 'package:PakRat/pakData.dart';
 
 class AddPakItemModal extends StatefulWidget {
-  const AddPakItemModal();
+  String pakName = "";
+
+  AddPakItemModal(String pname) {
+    pakName = pname;
+  }
 
   @override
-  _AddPakItemModalState createState() => _AddPakItemModalState();
+  _AddPakItemModalState createState() => _AddPakItemModalState(pakName);
 }
 
 class _AddPakItemModalState extends State<AddPakItemModal> {
   String title = "";
   String desc = "";
+  String pakName = "";
+
+  _AddPakItemModalState(String pakName) {
+    this.pakName = pakName;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +64,14 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
+                  onPressed: () async {
+                    PakDataItem dataItem = PakDataItem(title, desc);
+                    PakData data = await getPak(pakName);
+                    data.addItem(dataItem);
+                    await setOrUpdatePak(data);
+                    navigateToPaks(context);
                   },
                   child: Text("ADD", style: TextStyle(fontSize: 16)),
-                  // TODO: have this button add the new item to the database and make sure it displays on the paks screen
                 ),
               ),
             ],
@@ -66,4 +80,8 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
       ],
     );
   }
+}
+
+Future navigateToPaks(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks()));
 }
