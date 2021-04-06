@@ -33,7 +33,7 @@ class HomeState extends State<Home> {
             return Scaffold(
               drawer: SideMenu(),
               appBar: AppBar(
-                title: Text('Home', style: TextStyle(color: HexColor("444444"))),
+                title: Text('Your Paks', style: TextStyle(color: HexColor("444444"))),
               ),
               body: ListView.separated(
                 padding: EdgeInsets.symmetric(
@@ -55,7 +55,7 @@ class HomeState extends State<Home> {
                       ),
                     ),
                     onTap: () {
-                      navigateToPaks(context);
+                      navigateToPaks(context, item);
                     },
                   );
                 },
@@ -76,6 +76,6 @@ Future<String> getUID() async {
   return id;
 }
 
-Future navigateToPaks(context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks()));
+Future navigateToPaks(context, String pakName) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }

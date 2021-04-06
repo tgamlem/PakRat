@@ -1,10 +1,7 @@
-import 'package:PakRat/widgets/sideMenu.dart';
-import 'package:PakRat/paks.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:PakRat/home.dart';
 
 void main() => runApp(App());
 
@@ -42,66 +39,7 @@ class _AppState extends State<App> {
       title: 'PakRat',
       theme: ThemeData(
           primaryColor: HexColor("bbdefb"), accentColor: HexColor("d7ccc8")),
-      home: HomePage(),
+      home: Home(),
     );
   }
-}
-
-class HomePage extends StatelessWidget {
-  List<String> _paks = ["Books", "Movies", "Coins", "Mugs"];
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: SideMenu(),
-      appBar: AppBar(
-        title: Text('Home', style: TextStyle(color: HexColor("444444"))),
-      ),
-      body: ListView.separated(
-        padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * .01,
-          vertical: 10,
-        ),
-        itemCount: (_paks.length),
-        itemBuilder: (context, index) {
-          String pak = _paks[index];
-          return GestureDetector(
-            child: Card(
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(pak, style: TextStyle(fontSize: 36)),
-                  ],
-                ),
-              ),
-            ),
-            onTap: () {
-              // showDialog(
-              //     context: context,
-              //     builder: (context) {
-              //       return AlertDialog(
-              //         title: Text(pak),
-              //       );
-              //     });
-              navigateToPaks(context);
-            },
-          );
-        },
-        separatorBuilder: (context, index) {
-          return Container(height: 10, width: 0);
-        },
-      ),
-    );
-  }
-}
-
-Future<String> getUID() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String id = prefs.getString('user_id')!;
-  print(id);
-  return id;
-}
-
-Future navigateToPaks(context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks()));
 }

@@ -69,7 +69,7 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
                     PakData data = await getPak(pakName);
                     data.addItem(dataItem);
                     await setOrUpdatePak(data);
-                    navigateToPaks(context);
+                    navigateToPaks(context, pakName);
                   },
                   child: Text("ADD", style: TextStyle(fontSize: 16)),
                 ),
@@ -82,6 +82,6 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
   }
 }
 
-Future navigateToPaks(context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks()));
+Future navigateToPaks(context, String pakName) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }

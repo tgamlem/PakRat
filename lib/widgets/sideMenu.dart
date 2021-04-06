@@ -1,66 +1,88 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import '../login.dart';
-import '../main.dart';
+import '../home.dart';
 import '../paks.dart';
+import '../pakData.dart';
 
-class SideMenu extends StatelessWidget {
+class SideMenu extends StatefulWidget {
+  @override
+  SideMenuState createState() {
+    return SideMenuState();
+  }
+}
+
+class SideMenuState extends State<SideMenu> {
+  late Future<List<String>> _paks;
+
+  @override
+  void initState() {
+    super.initState();
+    _paks = getAllPakNames();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Text(
-              'PakRat',
-              style: TextStyle(color: HexColor("757575"), fontSize: 24),
-            ),
-            decoration: BoxDecoration(
-              color: HexColor("d7ccc8"),
-              // image: DecorationImage(
-              //     fit: BoxFit.fill, image: AssetImage('img/logo.png')),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.login),
-            title: Text('Login'),
-            onTap: () => {navigateToLogin(context)}),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
-            onTap: () => {navigateToHome(context)},
-          ),
-          ExpansionTile(
-            leading: Icon(Icons.toc_rounded),
-            title: Text('Paks'),
-            children: [
-              ListTile(
-                title: Text('Books'),
-                onTap: () => {navigateToPaks(context)},
+    return FutureBuilder<List<String>>(
+        future: _paks,
+        builder: (context, futureResult) {
+          if (!futureResult.hasData) {
+            return CircularProgressIndicator();
+          } else {
+            return Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  DrawerHeader(
+                    child: Text(
+                      'PakRat',
+                      style: TextStyle(color: HexColor("757575"), fontSize: 24),
+                    ),
+                    decoration: BoxDecoration(
+                      color: HexColor("d7ccc8"),
+                      // image: DecorationImage(
+                      //     fit: BoxFit.fill, image: AssetImage('img/logo.png')),
+                    ),
+                  ),
+                  ListTile(
+                      leading: Icon(Icons.login),
+                      title: Text('Login'),
+                      onTap: () => {navigateToLogin(context)}),
+                  ListTile(
+                    leading: Icon(Icons.home),
+                    title: Text('Home'),
+                    onTap: () => {navigateToHome(context)},
+                  ),
+                  ExpansionTile(
+                    leading: Icon(Icons.toc_rounded),
+                    title: Text('Paks'),
+                    children: [
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: (futureResult.data!.length),
+                          itemBuilder: (context, index) {
+                            final item = futureResult.data![index];
+                            return ListTile(
+                                title: Text(item),
+                                onTap: () => {navigateToPaks(context, item)});
+                          }),
+                    ],
+                  ),
+                ],
               ),
-              ListTile(
-                title: Text('Movies'),
-                onTap: () => {navigateToPaks(context)},
-              ),
-              ListTile(
-                title: Text('Coins'),
-                onTap: () => {navigateToPaks(context)},
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+            );
+          }
+        });
   }
 }
 
 Future navigateToHome(context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
 }
 
-Future navigateToPaks(context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks()));
+Future navigateToPaks(context, String pakName) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }
 
 Future navigateToLogin(context) async {
