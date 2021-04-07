@@ -36,18 +36,15 @@ class SideMenuState extends State<SideMenu> {
                   DrawerHeader(
                     child: Text(
                       'PakRat',
-                      style: TextStyle(color: HexColor("757575"), fontSize: 24),
+                      style: TextStyle(color: HexColor("000000"), fontSize: 24),
                     ),
                     decoration: BoxDecoration(
-                      color: HexColor("d7ccc8"),
-                      // image: DecorationImage(
-                      //     fit: BoxFit.fill, image: AssetImage('img/logo.png')),
+                      color: HexColor("9e9e9e"),
+                      image: DecorationImage(
+                          fit: BoxFit.fill, image: AssetImage('img/Pakrat_White.png')),
                     ),
                   ),
-                  ListTile(
-                      leading: Icon(Icons.login),
-                      title: Text('Login'),
-                      onTap: () => {navigateToLogin(context)}),
+                  
                   ListTile(
                     leading: Icon(Icons.home),
                     title: Text('Home'),
@@ -69,6 +66,10 @@ class SideMenuState extends State<SideMenu> {
                           }),
                     ],
                   ),
+                  ListTile(
+                    leading: Icon(Icons.login),
+                    title: Text('Login'),
+                    onTap: () => {navigateToLogin(context)}),
                 ],
               ),
             );

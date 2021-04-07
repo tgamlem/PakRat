@@ -40,8 +40,8 @@ class _AppState extends State<App> {
       title: 'PakRat',
       theme: ThemeData(
           primaryColor: HexColor("bbdefb"),
-          accentColor: HexColor("d7ccc8"),
-          //fontFamily: GoogleFonts.roboto(),
+          accentColor: HexColor("607d8b"),
+          fontFamily: GoogleFonts.zillaSlab().fontFamily,
       ),
       home: Home(),
     );

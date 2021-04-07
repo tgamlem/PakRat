@@ -2,6 +2,7 @@ import 'package:PakRat/paks.dart';
 import 'package:PakRat/widgets/pakModal.dart';
 import "package:flutter/material.dart";
 import 'package:PakRat/pakData.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class AddPakItemModal extends StatefulWidget {
   String pakName = "";
@@ -71,7 +72,7 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
                     await setOrUpdatePak(data);
                     navigateToPaks(context, pakName);
                   },
-                  child: Text("ADD", style: TextStyle(fontSize: 16)),
+                  child: Text("ADD", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
                 ),
               ),
             ],

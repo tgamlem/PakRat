@@ -31,6 +31,7 @@ class HomeState extends State<Home> {
             return CircularProgressIndicator();
           } else {
             return Scaffold(
+              backgroundColor: HexColor("eeeeee"),
               drawer: SideMenu(),
               appBar: AppBar(
                 title: Text('Your Paks', style: TextStyle(color: HexColor("444444"))),
@@ -45,11 +46,12 @@ class HomeState extends State<Home> {
                   final item = futureResult.data![index];
                   return GestureDetector(
                     child: Card(
+                      color: HexColor("fcfcfc"),
                       child: Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(item, style: TextStyle(fontSize: 36)),
+                            Text(item, style: TextStyle(fontSize: 30)),
                           ],
                         ),
                       ),
@@ -60,7 +62,7 @@ class HomeState extends State<Home> {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return Container(height: 10, width: 0);
+                  return Container(height: 0, width: 0);
                 },
               ),
             );

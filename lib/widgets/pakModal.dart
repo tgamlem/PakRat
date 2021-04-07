@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:hexcolor/hexcolor.dart';
 
 class PakModal extends StatefulWidget {
   final String title, desc;
@@ -58,7 +59,7 @@ class _PakModalState extends State<PakModal> {
               alignment: Alignment.bottomRight,
               child: TextButton(onPressed: () {
                 Navigator.of(context).pop();},
-                child: Text("DONE", style: TextStyle(fontSize: 16)),
+                child: Text("DONE", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
               ),
             ),
           ],

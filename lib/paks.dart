@@ -41,6 +41,7 @@ class PaksState extends State<Paks> {
             return CircularProgressIndicator();
           } else {
             return Scaffold(
+              backgroundColor: HexColor("eeeeee"),
               drawer: SideMenu(),
               appBar: AppBar(
                 title: Text(pakName),
@@ -104,11 +105,12 @@ class PaksState extends State<Paks> {
                               });
                         },
                         child: Card(
+                          color: HexColor("fcfcfc"),
                           child: Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(item.title, style: TextStyle(fontSize: 36))
+                                Text(item.title, style: TextStyle(fontSize: 30))
                               ],
                             ),
                           ),
@@ -130,7 +132,7 @@ class PaksState extends State<Paks> {
               ),
               floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.add),
-                backgroundColor: HexColor("bbdefb"),
+                backgroundColor: HexColor("9e9e9e"),
                 onPressed: () {
                   showDialog(
                       context: context,
