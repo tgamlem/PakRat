@@ -81,7 +81,7 @@ class PaksState extends State<Paks> {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   title: Text(
-                                    "Delete task?\n(This action will permanately delete this item)",
+                                    "Delete item?\n(This action will permanately delete this item)",
                                     //style: GoogleFonts.openSans()
                                   ),
                                   actions: <Widget>[
@@ -135,7 +135,7 @@ class PaksState extends State<Paks> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AddPakItemModal("TEST");
+                        return AddPakItemModal(pakName);
                       });
                 },
               ),

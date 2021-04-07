@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:PakRat/home.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(App());
 
@@ -38,7 +39,10 @@ class _AppState extends State<App> {
     return MaterialApp(
       title: 'PakRat',
       theme: ThemeData(
-          primaryColor: HexColor("bbdefb"), accentColor: HexColor("d7ccc8")),
+          primaryColor: HexColor("bbdefb"),
+          accentColor: HexColor("d7ccc8"),
+          //fontFamily: GoogleFonts.roboto(),
+      ),
       home: Home(),
     );
   }
