@@ -19,6 +19,7 @@ class Paks extends StatefulWidget {
 
 class PaksState extends State<Paks> {
   late Future<PakData> pakData;
+  bool isHydrated = false;
   String pakName = "";
   PaksState(String name) {
     pakName = name;
@@ -30,6 +31,7 @@ class PaksState extends State<Paks> {
 
     // initial load
     pakData = getPak(pakName);
+    isHydrated = true;
   }
 
   @override
@@ -37,7 +39,7 @@ class PaksState extends State<Paks> {
     return FutureBuilder<PakData>(
         future: pakData,
         builder: (context, futureResult) {
-          if (!futureResult.hasData) {
+          if (!isHydrated) {
             return CircularProgressIndicator();
           } else {
             return Scaffold(
@@ -49,10 +51,14 @@ class PaksState extends State<Paks> {
               body: Padding(
                 padding: EdgeInsets.fromLTRB(10, 14, 10, 14),
                 child: ListView.builder(
-                  itemCount: futureResult.data!.dataItems.length,
+                  itemCount: futureResult.data?.dataItems.length ?? 0,
                   itemBuilder: (context, index) {
-                    final item = futureResult.data!.dataItems[index];
+                    if (futureResult.data == null) {
+                      return Container();
+                    } else {
 
+                    
+                    final item = futureResult.data!.dataItems[index];
                     return GestureDetector(
                       child: Dismissible(
                         key: Key(item.title),
@@ -106,24 +112,40 @@ class PaksState extends State<Paks> {
                         },
                         child: Card(
                           color: HexColor("fcfcfc"),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 12),
-                                  child: Column(
-                                    children: [
-                                      Text(item.title, style: TextStyle(fontSize: 30)),
-                                      Text(item.value, style: TextStyle(fontSize: 20, color: HexColor("8d8d8d"))),
-                                    ],
+                          child: Wrap(direction: Axis.horizontal, children: [
+                            Center(
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(12, 4, 0, 4),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          width: 300,
+                                          child: Text(
+                                            item.title,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(fontSize: 30),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 300,
+                                          child: Text(
+                                            item.value,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: HexColor("8d8d8d")),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                
-                                
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                          ]),
                         ),
                       ),
                       onTap: () {
@@ -137,6 +159,7 @@ class PaksState extends State<Paks> {
                             });
                       },
                     );
+                  }
                   },
                 ),
               ),
