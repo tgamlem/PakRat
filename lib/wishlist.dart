@@ -20,7 +20,7 @@ class WishlistState extends State<Wishlist> {
   void initState() {
     super.initState();
 
-    pakData = getPak("TEST");
+    pakData = getPak("Wishlist");
   }
 
   @override

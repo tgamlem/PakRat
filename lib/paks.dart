@@ -108,9 +108,19 @@ class PaksState extends State<Paks> {
                           color: HexColor("fcfcfc"),
                           child: Center(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(item.title, style: TextStyle(fontSize: 30))
+                                Padding(
+                                  padding: EdgeInsets.only(left: 12),
+                                  child: Column(
+                                    children: [
+                                      Text(item.title, style: TextStyle(fontSize: 30)),
+                                      Text(item.value, style: TextStyle(fontSize: 20, color: HexColor("8d8d8d"))),
+                                    ],
+                                  ),
+                                ),
+                                
+                                
                               ],
                             ),
                           ),

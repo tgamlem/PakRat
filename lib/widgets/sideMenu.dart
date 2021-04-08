@@ -44,7 +44,6 @@ class SideMenuState extends State<SideMenu> {
                           fit: BoxFit.fill, image: AssetImage('img/Pakrat_White.png')),
                     ),
                   ),
-                  
                   ListTile(
                     leading: Icon(Icons.home),
                     title: Text('Home'),
