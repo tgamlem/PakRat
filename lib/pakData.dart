@@ -2,91 +2,90 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
   
-  Future<String> getUid() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? uid = prefs.getString('user_id');
-    if (uid != null && uid != "")
-      return uid;
-    else
-      return "";
-  }
+Future<String> getUid() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? uid = prefs.getString('user_id');
+  if (uid != null && uid != "")
+    return uid;
+  else
+    return "";
+}
 
-  // Used to get pak from Firestore
-  Future<PakData> getPak(String pakName) async {
-    const String COLLECTION = 'paks';
-    String uid = await getUid();
+// Used to get pak from Firestore
+Future<PakData> getPak(String pakName) async {
+  const String COLLECTION = 'paks';
+  String uid = await getUid();
 
-    if (uid == "") throw new Exception("Cannot read pak because uid is empty");
-    if (pakName == "")
-      throw new Exception("Cannot read pak because pak name is empty");
+  if (uid == "") throw new Exception("Cannot read pak because uid is empty");
+  if (pakName == "")
+    throw new Exception("Cannot read pak because pak name is empty");
 
-    // get pak name as collection
-    var pak = FirebaseFirestore.instance
-        .collection(COLLECTION)
-        .doc(uid)
-        .collection(COLLECTION)
-        .doc(pakName);
-    var data = await pak.get();
-    // get data field off of pak collection or empty string
-    var pakDataItems = data.data()?['data'].toString() ?? "";
-    // decode json
-    final List items = json.decode(pakDataItems);
-    // cast to PakDataItem
-    final List<PakDataItem> pakDataItemsList =
-        items.map((item) => PakDataItem.fromJson(item)).toList();
+  // get pak name as collection
+  var pak = FirebaseFirestore.instance
+      .collection(COLLECTION)
+      .doc(uid)
+      .collection(COLLECTION)
+      .doc(pakName);
+  var data = await pak.get();
+  // get data field off of pak collection or empty string
+  var pakDataItems = data.data()?['data'].toString() ?? "";
+  // decode json
+  final List items = json.decode(pakDataItems);
+  // cast to PakDataItem
+  final List<PakDataItem> pakDataItemsList =
+      items.map((item) => PakDataItem.fromJson(item)).toList();
 
-    final PakData pakData = PakData(pakDataItemsList, pakName);
+  final PakData pakData = PakData(pakDataItemsList, pakName);
 
-    return pakData;
-  }
+  return pakData;
+}
 
   // Used to add or update a pak in firestore
-  Future<bool> setOrUpdatePak(PakData pakData) async {
-    const String COLLECTION = "paks";
+Future<bool> setOrUpdatePak(PakData pakData) async {
+  const String COLLECTION = "paks";
 
-    String uid = await getUid();
-    String json = pakData.toJson();
-    bool success = false;
+  String uid = await getUid();
+  String json = pakData.toJson();
+  bool success = false;
+  if (json == "")
+    throw new Exception("Cannot update pak because json is empty");
+  if (uid == "")
+    throw new Exception("Cannot update pak because uid is empty");
+  if (pakData.pakName == "")
+    throw new Exception("Cannot update pak because pak name is empty");
+ 
+  await FirebaseFirestore.instance
+      .collection(COLLECTION)
+      .doc(uid)
+      .collection(COLLECTION)
+      .doc(pakData.pakName)
+      .set({
+        'uid': uid,
+        'pakName': pakData.pakName,
+        'data': json,
+      }, new SetOptions(merge: true))
+      .then((value) => success = true)
+      // ignore: return_of_invalid_type_from_catch_error
+      .catchError((error) => print("$error"));
 
-    if (json == "")
-      throw new Exception("Cannot update pak because json is empty");
-    if (uid == "")
-      throw new Exception("Cannot update pak because uid is empty");
-    if (pakData.pakName == "")
-      throw new Exception("Cannot update pak because pak name is empty");
+  return success;
+}
 
-    await FirebaseFirestore.instance
-        .collection(COLLECTION)
-        .doc(uid)
-        .collection(COLLECTION)
-        .doc(pakData.pakName)
-        .set({
-          'uid': uid,
-          'pakName': pakData.pakName,
-          'data': json,
-        }, new SetOptions(merge: true))
-        .then((value) => success = true)
-        // ignore: return_of_invalid_type_from_catch_error
-        .catchError((error) => print("$error"));
+Future<List<String>> getAllPakNames() async {
+  const String COLLECTION = "paks";
+  String uid = await getUid();
+  List<String> names = <String>[];
 
-    return success;
-  }
+  var document = await FirebaseFirestore.instance
+      .collection(COLLECTION)
+      .doc(uid)
+      .collection(COLLECTION)
+      .get();
 
-  Future<List<String>> getAllPakNames() async {
-    const String COLLECTION = "paks";
-    String uid = await getUid();
-    List<String> names = <String>[];
+  document.docs.forEach((doc) => {names.add(doc.id)});
 
-    var document = await FirebaseFirestore.instance
-        .collection(COLLECTION)
-        .doc(uid)
-        .collection(COLLECTION)
-        .get();
-
-    document.docs.forEach((doc) => {names.add(doc.id)});
-
-    return names;
-  }
+  return names;
+}
 
 
 class PakData {

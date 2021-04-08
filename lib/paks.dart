@@ -6,21 +6,30 @@ import 'package:PakRat/widgets/addPakItemModal.dart';
 import 'package:PakRat/pakData.dart';
 
 class Paks extends StatefulWidget {
+  String pakName = "";
+  Paks(String name) {
+    pakName = name;
+  }
+
   @override
   PaksState createState() {
-    return PaksState();
+    return PaksState(pakName);
   }
 }
 
 class PaksState extends State<Paks> {
   late Future<PakData> pakData;
+  String pakName = "";
+  PaksState(String name) {
+    pakName = name;
+  }
 
   @override
   void initState() {
     super.initState();
 
     // initial load
-    pakData = getPak("TEST");
+    pakData = getPak(pakName);
   }
 
   @override
@@ -32,9 +41,10 @@ class PaksState extends State<Paks> {
             return CircularProgressIndicator();
           } else {
             return Scaffold(
+              backgroundColor: HexColor("eeeeee"),
               drawer: SideMenu(),
               appBar: AppBar(
-                title: Text("Paks"),
+                title: Text(pakName),
               ),
               body: Padding(
                 padding: EdgeInsets.fromLTRB(10, 14, 10, 14),
@@ -45,89 +55,99 @@ class PaksState extends State<Paks> {
 
                     return GestureDetector(
                       child: Dismissible(
-                      key: Key(item.title),
-                      onDismissed: (direction) {
-                        setState(() {
-                          futureResult.data!.dataItems.removeAt(index);
-                        });
+                        key: Key(item.title),
+                        onDismissed: (direction) {
+                          setState(() {
+                            futureResult.data!.dataItems.removeAt(index);
+                          });
 
-                        PakData _pakData = futureResult.data!;
-                        _pakData
-                            .removeItem(PakDataItem(item.title, item.value));
-                        setOrUpdatePak(_pakData);
+                          PakData _pakData = futureResult.data!;
+                          _pakData
+                              .removeItem(PakDataItem(item.title, item.value));
+                          setOrUpdatePak(_pakData);
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("${item.title} dismissed")));
-                      },
-                      background: Container(
-                              padding: EdgeInsets.only(left: 12),
-                              child: Icon(Icons.delete),
-                              alignment: Alignment.centerLeft,
-                              color: Colors.red[700],
-                            ),
-                            confirmDismiss: (dismissDirection) {
-                              return showDialog(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Delete task?\n(This action will permanately delete this item)",
-                                        //style: GoogleFonts.openSans()
-                                      ),
-                                      actions: <Widget>[
-                                        // button to confirm delete
-                                        TextButton(
-                                          child: Text("Delete"),
-                                          onPressed: () async {
-                                            Navigator.of(context).pop(true);
-                                          },
-                                        ),
-                                        // button to cancel deleting
-                                        TextButton(
-                                          child: Text("Cancel"),
-                                          onPressed: () {
-                                            Navigator.of(context).pop(false);
-                                          },
-                                        )
-                                      ],
-                                    );
-                                  });
-                            },
-                      child: Card(
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(item.title,
-                                        style: TextStyle(fontSize: 36))
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("${item.title} dismissed")));
+                        },
+                        background: Container(
+                          padding: EdgeInsets.only(left: 12),
+                          child: Icon(Icons.delete),
+                          alignment: Alignment.centerLeft,
+                          color: Colors.red[700],
+                        ),
+                        confirmDismiss: (dismissDirection) {
+                          return showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    "Delete item?\n(This action will permanately delete this item)",
+                                    //style: GoogleFonts.openSans()
+                                  ),
+                                  actions: <Widget>[
+                                    // button to confirm delete
+                                    TextButton(
+                                      child: Text("Delete"),
+                                      onPressed: () async {
+                                        Navigator.of(context).pop(true);
+                                      },
+                                    ),
+                                    // button to cancel deleting
+                                    TextButton(
+                                      child: Text("Cancel"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop(false);
+                                      },
+                                    )
                                   ],
+                                );
+                              });
+                        },
+                        child: Card(
+                          color: HexColor("fcfcfc"),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 12),
+                                  child: Column(
+                                    children: [
+                                      Text(item.title, style: TextStyle(fontSize: 30)),
+                                      Text(item.value, style: TextStyle(fontSize: 20, color: HexColor("8d8d8d"))),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                                
+                                
+                              ],
                             ),
-                    ),
-                    onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return PakModal(
-                                    item.title,
-                                    item.value,
-                                  );
-                                });
-                          },
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return PakModal(
+                                item.title,
+                                item.value,
+                              );
+                            });
+                      },
                     );
                   },
                 ),
               ),
               floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.add),
-                backgroundColor: HexColor("bbdefb"),
+                backgroundColor: HexColor("9e9e9e"),
                 onPressed: () {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AddPakItemModal("TEST");
+                        return AddPakItemModal(pakName);
                       });
                 },
               ),
