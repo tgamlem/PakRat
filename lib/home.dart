@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:PakRat/pakData.dart';
+import 'package:PakRat/widgets/addPak.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -34,7 +35,8 @@ class HomeState extends State<Home> {
               backgroundColor: HexColor("eeeeee"),
               drawer: SideMenu(),
               appBar: AppBar(
-                title: Text('Your Paks', style: TextStyle(color: HexColor("444444"))),
+                title: Text('Your Paks',
+                    style: TextStyle(color: HexColor("444444"))),
               ),
               body: ListView.separated(
                 padding: EdgeInsets.symmetric(
@@ -65,6 +67,17 @@ class HomeState extends State<Home> {
                   return Container(height: 0, width: 0);
                 },
               ),
+              floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.add),
+                backgroundColor: HexColor("9e9e9e"),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AddPak();
+                      });
+                },
+              ),
             );
           }
         });
@@ -79,5 +92,6 @@ Future<String> getUID() async {
 }
 
 Future navigateToPaks(context, String pakName) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks(pakName)));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }

@@ -122,7 +122,7 @@ class PaksState extends State<Paks> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         SizedBox(
-                                          width: 300,
+                                          width: MediaQuery.of(context).size.width * .8,
                                           child: Text(
                                             item.title,
                                             overflow: TextOverflow.ellipsis,
@@ -130,7 +130,7 @@ class PaksState extends State<Paks> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 300,
+                                          width: MediaQuery.of(context).size.width * .8,
                                           child: Text(
                                             item.value,
                                             overflow: TextOverflow.ellipsis,
