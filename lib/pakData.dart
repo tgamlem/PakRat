@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-  
+
 Future<String> getUid() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? uid = prefs.getString('user_id');
@@ -30,7 +30,10 @@ Future<PakData> getPak(String pakName) async {
   // get data field off of pak collection or empty string
   var pakDataItems = data.data()?['data'].toString() ?? "";
   // decode json
-  final List items = json.decode(pakDataItems);
+  List items = [];
+  if (pakDataItems != "") {
+    items = json.decode(pakDataItems);
+  }
   // cast to PakDataItem
   final List<PakDataItem> pakDataItemsList =
       items.map((item) => PakDataItem.fromJson(item)).toList();
@@ -40,20 +43,18 @@ Future<PakData> getPak(String pakName) async {
   return pakData;
 }
 
-  // Used to add or update a pak in firestore
+// Used to add or update a pak in firestore
 Future<bool> setOrUpdatePak(PakData pakData) async {
   const String COLLECTION = "paks";
 
   String uid = await getUid();
   String json = pakData.toJson();
   bool success = false;
-  if (json == "")
-    throw new Exception("Cannot update pak because json is empty");
-  if (uid == "")
-    throw new Exception("Cannot update pak because uid is empty");
+  
+  if (uid == "") throw new Exception("Cannot update pak because uid is empty");
   if (pakData.pakName == "")
     throw new Exception("Cannot update pak because pak name is empty");
- 
+
   await FirebaseFirestore.instance
       .collection(COLLECTION)
       .doc(uid)
@@ -87,7 +88,6 @@ Future<List<String>> getAllPakNames() async {
   return names;
 }
 
-
 class PakData {
   List<PakDataItem> dataItems = [];
   String pakName = "";
@@ -114,7 +114,9 @@ class PakData {
       json += jsonEncode(item) + ',';
     }
     json = json.substring(0, json.length - 1);
-    json += ']';
+    if (dataItems.length != 0) {
+      json += ']';
+    }
     return json;
   }
 }

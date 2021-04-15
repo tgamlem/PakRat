@@ -41,7 +41,7 @@ class _AppState extends State<App> {
       theme: ThemeData(
           primaryColor: HexColor("bbdefb"),
           accentColor: HexColor("607d8b"),
-          fontFamily: GoogleFonts.zillaSlab().fontFamily,
+          fontFamily: GoogleFonts.sourceSansPro().fontFamily,
       ),
       home: Home(),
     );
