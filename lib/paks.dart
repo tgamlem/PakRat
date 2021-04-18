@@ -4,6 +4,11 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:PakRat/widgets/pakModal.dart';
 import 'package:PakRat/widgets/addPakItemModal.dart';
 import 'package:PakRat/pakData.dart';
+import 'package:hawk_fab_menu/hawk_fab_menu.dart';
+import 'package:PakRat/widgets/bookPakModal.dart';
+import 'package:PakRat/widgets/moviePakModal.dart';
+import 'package:PakRat/widgets/gamePakModal.dart';
+import 'package:PakRat/widgets/coinPakModal.dart';
 
 class Paks extends StatefulWidget {
   String pakName = "";
@@ -48,131 +53,189 @@ class PaksState extends State<Paks> {
               appBar: AppBar(
                 title: Text(pakName),
               ),
-              body: Padding(
-                padding: EdgeInsets.fromLTRB(10, 14, 10, 14),
-                child: ListView.builder(
-                  itemCount: futureResult.data?.dataItems.length ?? 0,
-                  itemBuilder: (context, index) {
-                    if (futureResult.data == null) {
-                      return Container();
-                    } else {
-
-                    
-                    final item = futureResult.data!.dataItems[index];
-                    return GestureDetector(
-                      child: Dismissible(
-                        key: Key(item.title),
-                        onDismissed: (direction) {
-                          setState(() {
-                            futureResult.data!.dataItems.removeAt(index);
+              body: HawkFabMenu(
+                icon: AnimatedIcons.menu_close,
+                fabColor: HexColor("9e9e9e"),
+                items: [
+                  HawkFabMenuItem(
+                    label: "Books",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return BookPakModal(pakName);
                           });
-
-                          PakData _pakData = futureResult.data!;
-                          _pakData
-                              .removeItem(PakDataItem(item.title, item.value));
-                          setOrUpdatePak(_pakData);
-
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("${item.title} dismissed")));
-                        },
-                        background: Container(
-                          padding: EdgeInsets.only(left: 12),
-                          child: Icon(Icons.delete),
-                          alignment: Alignment.centerLeft,
-                          color: Colors.red[700],
-                        ),
-                        confirmDismiss: (dismissDirection) {
-                          return showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text(
-                                    "Delete item?\n(This action will permanately delete this item)",
-                                    //style: GoogleFonts.openSans()
-                                  ),
-                                  actions: <Widget>[
-                                    // button to confirm delete
-                                    TextButton(
-                                      child: Text("Delete"),
-                                      onPressed: () async {
-                                        Navigator.of(context).pop(true);
-                                      },
-                                    ),
-                                    // button to cancel deleting
-                                    TextButton(
-                                      child: Text("Cancel"),
-                                      onPressed: () {
-                                        Navigator.of(context).pop(false);
-                                      },
-                                    )
-                                  ],
-                                );
+                    },
+                    icon: Icon(Icons.book_outlined),
+                  ),
+                  HawkFabMenuItem(
+                    label: "Movies",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return MoviePakModal(pakName);
+                          });
+                    },
+                    icon: Icon(Icons.movie_outlined),
+                  ),
+                  HawkFabMenuItem(
+                    label: "Games",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return GamePakModal(pakName);
+                          });
+                    },
+                    icon: Icon(Icons.videogame_asset_outlined),
+                  ),
+                  HawkFabMenuItem(
+                    label: "Coins",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CoinPakModal(pakName);
+                          });
+                    },
+                    icon: Icon(Icons.attach_money_outlined),
+                  ),
+                  HawkFabMenuItem(
+                    label: "Other",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AddPakItemModal(pakName);
+                          });
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                ],
+                body: Padding(
+                  padding: EdgeInsets.fromLTRB(10, 14, 10, 14),
+                  child: ListView.builder(
+                    itemCount: futureResult.data?.dataItems.length ?? 0,
+                    itemBuilder: (context, index) {
+                      if (futureResult.data == null) {
+                        return Container();
+                      } else {
+                        final item = futureResult.data!.dataItems[index];
+                        return GestureDetector(
+                          child: Dismissible(
+                            key: Key(item.title),
+                            onDismissed: (direction) {
+                              setState(() {
+                                futureResult.data!.dataItems.removeAt(index);
                               });
-                        },
-                        child: Card(
-                          color: HexColor("fcfcfc"),
-                          child: Wrap(direction: Axis.horizontal, children: [
-                            Center(
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(12, 4, 0, 4),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context).size.width * .8,
-                                          child: Text(
-                                            item.title,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(fontSize: 30),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context).size.width * .8,
-                                          child: Text(
-                                            item.value,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: HexColor("8d8d8d")),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+
+                              PakData _pakData = futureResult.data!;
+                              _pakData.removeItem(
+                                  PakDataItem(item.title, item.value));
+                              setOrUpdatePak(_pakData);
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text("${item.title} dismissed")));
+                            },
+                            background: Container(
+                              padding: EdgeInsets.only(left: 12),
+                              child: Icon(Icons.delete),
+                              alignment: Alignment.centerLeft,
+                              color: Colors.red[700],
                             ),
-                          ]),
-                        ),
-                      ),
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return PakModal(
-                                item.title,
-                                item.value,
-                              );
-                            });
-                      },
-                    );
-                  }
-                  },
+                            confirmDismiss: (dismissDirection) {
+                              return showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        "Delete item?\n(This action will permanately delete this item)",
+                                        //style: GoogleFonts.openSans()
+                                      ),
+                                      actions: <Widget>[
+                                        // button to confirm delete
+                                        TextButton(
+                                          child: Text("Delete"),
+                                          onPressed: () async {
+                                            Navigator.of(context).pop(true);
+                                          },
+                                        ),
+                                        // button to cancel deleting
+                                        TextButton(
+                                          child: Text("Cancel"),
+                                          onPressed: () {
+                                            Navigator.of(context).pop(false);
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Card(
+                              color: HexColor("fcfcfc"),
+                              child:
+                                  Wrap(direction: Axis.horizontal, children: [
+                                Center(
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(12, 4, 0, 4),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .8,
+                                              child: Text(
+                                                item.title,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(fontSize: 30),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .8,
+                                              child: Text(
+                                                item.value,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: HexColor("8d8d8d")),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ),
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return PakModal(
+                                    item.title,
+                                    item.value,
+                                  );
+                                });
+                          },
+                        );
+                      }
+                    },
+                  ),
                 ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                child: Icon(Icons.add),
-                backgroundColor: HexColor("9e9e9e"),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AddPakItemModal(pakName);
-                      });
-                },
               ),
             );
           }
