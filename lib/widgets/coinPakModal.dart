@@ -109,11 +109,12 @@ class _CoinPakModalState extends State<CoinPakModal> {
                 alignment: Alignment.bottomRight,
                 child: TextButton(
                   onPressed: () async {
-                    // PakDataItem dataItem = PakDataItem(title, desc);
-                    // PakData data = await getPak(pakName);
-                    // data.addItem(dataItem);
-                    // await setOrUpdatePak(data);
-                    // navigateToPaks(context, pakName);
+                    List<String> values = [year, mint, condition, worth, history];
+                    PakDataItem dataItem = new PakDataItem(type, values);
+                    PakData data = await getPak(pakName);
+                    data.addItem(dataItem);
+                    await setOrUpdatePak(data);
+                    navigateToPaks(context, pakName);
                   },
                   child: Text("ADD", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
                 ),

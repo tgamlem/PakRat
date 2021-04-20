@@ -109,13 +109,16 @@ class _BookPakModalState extends State<BookPakModal> {
                 alignment: Alignment.bottomRight,
                 child: TextButton(
                   onPressed: () async {
-                    // PakDataItem dataItem = PakDataItem(title, desc);
-                    // PakData data = await getPak(pakName);
-                    // data.addItem(dataItem);
-                    // await setOrUpdatePak(data);
-                    // navigateToPaks(context, pakName);
+                    List<String> values = [author, date, genre, isbn, summary];
+                    PakDataItem dataItem = new PakDataItem(title, values);
+                    PakData data = await getPak(pakName);
+                    data.addItem(dataItem);
+                    await setOrUpdatePak(data);
+                    navigateToPaks(context, pakName);
                   },
-                  child: Text("ADD", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
+                  child: Text("ADD",
+                      style:
+                          TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
                 ),
               ),
             ],
@@ -127,5 +130,6 @@ class _BookPakModalState extends State<BookPakModal> {
 }
 
 Future navigateToPaks(context, String pakName) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks(pakName)));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }

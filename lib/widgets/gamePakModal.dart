@@ -98,11 +98,12 @@ class _GamePakModalState extends State<GamePakModal> {
                 alignment: Alignment.bottomRight,
                 child: TextButton(
                   onPressed: () async {
-                    // PakDataItem dataItem = PakDataItem(title, desc);
-                    // PakData data = await getPak(pakName);
-                    // data.addItem(dataItem);
-                    // await setOrUpdatePak(data);
-                    // navigateToPaks(context, pakName);
+                    List<String> values = [genre, date, platform, description];
+                    PakDataItem dataItem = new PakDataItem(title, values);
+                    PakData data = await getPak(pakName);
+                    data.addItem(dataItem);
+                    await setOrUpdatePak(data);
+                    navigateToPaks(context, pakName);
                   },
                   child: Text("ADD", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
                 ),

@@ -205,7 +205,7 @@ class PaksState extends State<Paks> {
                                                       .width *
                                                   .8,
                                               child: Text(
-                                                item.value,
+                                                item.value[0],
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
                                                     fontSize: 20,
