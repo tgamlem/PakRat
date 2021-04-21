@@ -4,6 +4,7 @@ import '../login.dart';
 import '../home.dart';
 import '../paks.dart';
 import '../pakData.dart';
+import '../wishlist.dart';
 
 class SideMenu extends StatefulWidget {
   @override
@@ -41,7 +42,8 @@ class SideMenuState extends State<SideMenu> {
                     decoration: BoxDecoration(
                       color: HexColor("9e9e9e"),
                       image: DecorationImage(
-                          fit: BoxFit.fill, image: AssetImage('img/Pakrat_White.png')),
+                          fit: BoxFit.fill,
+                          image: AssetImage('img/Pakrat_White.png')),
                     ),
                   ),
                   ListTile(
@@ -66,9 +68,14 @@ class SideMenuState extends State<SideMenu> {
                     ],
                   ),
                   ListTile(
-                    leading: Icon(Icons.login),
-                    title: Text('Login'),
-                    onTap: () => {navigateToLogin(context)}),
+                    leading: Icon(Icons.star_border_outlined),
+                    title: Text('Wishlist'),
+                    onTap: () => {navigateToWishlist(context)}
+                  ),
+                  ListTile(
+                      leading: Icon(Icons.login),
+                      title: Text('Login'),
+                      onTap: () => {navigateToLogin(context)}),
                 ],
               ),
             );
@@ -82,9 +89,14 @@ Future navigateToHome(context) async {
 }
 
 Future navigateToPaks(context, String pakName) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks(pakName)));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }
 
 Future navigateToLogin(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+}
+
+Future navigateToWishlist(context) async {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Wishlist()));
 }
