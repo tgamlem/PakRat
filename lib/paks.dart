@@ -177,14 +177,26 @@ class PaksState extends State<Paks> {
                             },
                             child: Card(
                               color: HexColor("fcfcfc"),
-                              child:
-                                  Wrap(direction: Axis.horizontal, children: [
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ClipPath(
+                                clipper: ShapeBorderClipper(
+                                  shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                                ),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(left: BorderSide(color: HexColor("bbdefb"), width: 6))
+                                  ),
+                                  child: Wrap(direction: Axis.horizontal, children: [
                                 Center(
                                   child: Row(
                                     children: [
                                       Padding(
                                         padding:
-                                            EdgeInsets.fromLTRB(12, 4, 0, 4),
+                                            EdgeInsets.fromLTRB(12, 0, 0, 4),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
@@ -219,6 +231,8 @@ class PaksState extends State<Paks> {
                                   ),
                                 ),
                               ]),
+                            ),
+                              ),
                             ),
                           ),
                           onTap: () {
