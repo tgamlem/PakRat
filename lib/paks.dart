@@ -121,6 +121,11 @@ class PaksState extends State<Paks> {
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
+                                        Image.asset(
+                                          'img/PakRat_White.png',
+                                          width: 100,
+                                          height: 100,
+                                        ),
                                         SizedBox(
                                           width: MediaQuery.of(context).size.width * .8,
                                           child: Text(
@@ -136,7 +141,7 @@ class PaksState extends State<Paks> {
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                                 fontSize: 20,
-                                                color: HexColor("8d8d8d")),
+                                                color: HexColor("8d8d8d")), 
                                           ),
                                         ),
                                       ],
@@ -144,7 +149,7 @@ class PaksState extends State<Paks> {
                                   ),
                                 ],
                               ),
-                            ),
+                            )
                           ]),
                         ),
                       ),

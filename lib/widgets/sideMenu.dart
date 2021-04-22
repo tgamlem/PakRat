@@ -41,7 +41,7 @@ class SideMenuState extends State<SideMenu> {
                     decoration: BoxDecoration(
                       color: HexColor("9e9e9e"),
                       image: DecorationImage(
-                          fit: BoxFit.fill, image: AssetImage('img/Pakrat_White.png')),
+                          fit: BoxFit.contain, image: AssetImage('img/PakRat_White.png')),
                     ),
                   ),
                   ListTile(
