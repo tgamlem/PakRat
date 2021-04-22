@@ -50,7 +50,7 @@ Future<bool> setOrUpdatePak(PakData pakData) async {
   String uid = await getUid();
   String json = pakData.toJson();
   bool success = false;
-  
+
   if (uid == "") throw new Exception("Cannot update pak because uid is empty");
   if (pakData.pakName == "")
     throw new Exception("Cannot update pak because pak name is empty");
@@ -126,19 +126,19 @@ class PakDataItem {
   String title = "";
 
   /// Value of pak entry
-  String value = "";
+  List<String> value = [];
 
-  PakDataItem(String t, String v) {
+  PakDataItem(String t, List<String> v) {
     title = t;
     value = v;
   }
 
   PakDataItem.fromJson(Map<String, dynamic> json)
       : title = json['title'],
-        value = json['value'];
+        value = jsonDecode(json['value']).cast<String>();
 
   Map<String, dynamic> toJson() => {
         "title": title,
-        'value': value,
+        'value': jsonEncode(value),
       };
 }

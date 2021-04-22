@@ -66,7 +66,7 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
                 alignment: Alignment.bottomRight,
                 child: TextButton(
                   onPressed: () async {
-                    PakDataItem dataItem = PakDataItem(title, desc);
+                    PakDataItem dataItem = PakDataItem(title, [desc]);
                     PakData data = await getPak(pakName);
                     data.addItem(dataItem);
                     await setOrUpdatePak(data);
