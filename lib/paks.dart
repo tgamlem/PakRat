@@ -178,17 +178,17 @@ class PaksState extends State<Paks> {
                             child: Card(
                               color: HexColor("fcfcfc"),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(6),
                               ),
                               child: ClipPath(
                                 clipper: ShapeBorderClipper(
                                   shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(6),
                               ),
                                 ),
                               child: Container(
                                   decoration: BoxDecoration(
-                                    border: Border(left: BorderSide(color: HexColor("bbdefb"), width: 6))
+                                    border: Border(left: BorderSide(color: HexColor("4fc3f7"), width: 6))
                                   ),
                                   child: Wrap(direction: Axis.horizontal, children: [
                                 Center(
