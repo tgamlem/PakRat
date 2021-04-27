@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:PakRat/home.dart';
+import 'package:PakRat/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() => runApp(App());
+void main() async => runApp(App());
 
 class App extends StatefulWidget {
   _AppState createState() => _AppState();
@@ -43,7 +43,7 @@ class _AppState extends State<App> {
           accentColor: HexColor("607d8b"),
           fontFamily: GoogleFonts.sourceSansPro().fontFamily,
       ),
-      home: Home(),
+      home: Login(),
     );
   }
 }

@@ -200,6 +200,11 @@ class PaksState extends State<Paks> {
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
+                                            Image.asset(
+                                          'img/PakRat_White.png',
+                                          width: 100,
+                                          height: 100,
+                                        ),
                                             SizedBox(
                                               width: MediaQuery.of(context)
                                                       .size

@@ -3,6 +3,7 @@ import 'package:PakRat/widgets/pakModal.dart';
 import "package:flutter/material.dart";
 import 'package:PakRat/pakData.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:PakRat/camera_screen.dart';
 
 class AddPakItemModal extends StatefulWidget {
   String pakName = "";
@@ -42,6 +43,11 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              IconButton(
+                  icon: Icon(Icons.camera),
+                  onPressed: () {
+                    navigateToCamera(context);
+                  }),
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 14, 10, 0),
                 child: TextField(
@@ -72,7 +78,9 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
                     await setOrUpdatePak(data);
                     navigateToPaks(context, pakName);
                   },
-                  child: Text("ADD", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
+                  child: Text("ADD",
+                      style:
+                          TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
                 ),
               ),
             ],
@@ -84,5 +92,11 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
 }
 
 Future navigateToPaks(context, String pakName) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks(pakName)));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => Paks(pakName)));
+}
+
+Future navigateToCamera(context) async {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => CameraScreen()));
 }
