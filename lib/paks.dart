@@ -200,6 +200,11 @@ class PaksState extends State<Paks> {
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
+                                            if (item.image != null && item.image != "")
+                                            Image.network(item.image,
+                                              width: 100,
+                                              height: 100,),
+                                            if (item.image == "" || item.image == null)
                                             Image.asset(
                                           'img/PakRat_White.png',
                                           width: 100,

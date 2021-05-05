@@ -128,17 +128,22 @@ class PakDataItem {
   /// Value of pak entry
   List<String> value = [];
 
-  PakDataItem(String t, List<String> v) {
+  String image = "";
+
+  PakDataItem(String t, List<String> v, {String i = ""}) {
     title = t;
     value = v;
+    image = i;
   }
 
   PakDataItem.fromJson(Map<String, dynamic> json)
       : title = json['title'],
-        value = jsonDecode(json['value']).cast<String>();
+        value = jsonDecode(json['value']).cast<String>(),
+        image = json['image'];
 
   Map<String, dynamic> toJson() => {
         "title": title,
         'value': jsonEncode(value),
+        'image': image,
       };
 }

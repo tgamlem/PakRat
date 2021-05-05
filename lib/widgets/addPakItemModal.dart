@@ -7,22 +7,30 @@ import 'package:PakRat/camera_screen.dart';
 
 class AddPakItemModal extends StatefulWidget {
   String pakName = "";
+  String imgURL = "";
 
   AddPakItemModal(String pname) {
     pakName = pname;
   }
 
+  AddPakItemModal.img(String pname, String img) {
+    pakName = pname;
+    imgURL = img;
+  }
+
   @override
-  _AddPakItemModalState createState() => _AddPakItemModalState(pakName);
+  _AddPakItemModalState createState() => _AddPakItemModalState(pakName, imgURL);
 }
 
 class _AddPakItemModalState extends State<AddPakItemModal> {
   String title = "";
   String desc = "";
   String pakName = "";
+  String imgURL = "";
 
-  _AddPakItemModalState(String pakName) {
+  _AddPakItemModalState(String pakName, String imgURL) {
     this.pakName = pakName;
+    this.imgURL = imgURL;
   }
 
   @override
@@ -43,10 +51,13 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (imgURL != "")
+                Text(imgURL),       // TODO: change to show image not link
+              if (imgURL == "")
               IconButton(
                   icon: Icon(Icons.camera),
                   onPressed: () {
-                    navigateToCamera(context);
+                    navigateToCamera(context, pakName);
                   }),
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 14, 10, 0),
@@ -72,7 +83,7 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
                 alignment: Alignment.bottomRight,
                 child: TextButton(
                   onPressed: () async {
-                    PakDataItem dataItem = PakDataItem(title, [desc]);
+                    PakDataItem dataItem = PakDataItem(title, [desc], i: imgURL);
                     PakData data = await getPak(pakName);
                     data.addItem(dataItem);
                     await setOrUpdatePak(data);
@@ -96,7 +107,7 @@ Future navigateToPaks(context, String pakName) async {
       context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }
 
-Future navigateToCamera(context) async {
+Future navigateToCamera(context, String pakName) async {
   Navigator.push(
-      context, MaterialPageRoute(builder: (context) => CameraScreen()));
+      context, MaterialPageRoute(builder: (context) => CameraScreen(pakName)));
 }

@@ -30,16 +30,24 @@
 
 import 'dart:io';
 
+import 'package:PakRat/widgets/addPakItemModal.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import './preview_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'pakData.dart';
 
 class CameraScreen extends StatefulWidget {
+  String pakName = "";
+
+  CameraScreen(String pname) {
+    pakName = pname;
+  }
+
   @override
   _CameraScreenState createState() {
-    return _CameraScreenState();
+    return _CameraScreenState(pakName);
   }
 }
 
@@ -48,6 +56,11 @@ class _CameraScreenState extends State {
   List? cameras;
   int? selectedCameraIdx;
   String? imagePath;
+  String pakName = "";
+
+  _CameraScreenState(String pakName) {
+    this.pakName = pakName;
+  }
 
   @override
   void initState() {
@@ -162,8 +175,13 @@ class _CameraScreenState extends State {
             FloatingActionButton(
                 child: Icon(Icons.camera),
                 backgroundColor: Colors.blueGrey,
-                onPressed: () {
-                  _onCapturePressed(context);
+                onPressed: () async {
+                  String image = await _onCapturePressed(context);
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AddPakItemModal.img(pakName, image);
+                      });
                 })
           ],
         ),
@@ -212,9 +230,10 @@ class _CameraScreenState extends State {
     _initCameraController(selectedCamera);
   }
 
-  void _onCapturePressed(context) async {
+  Future<String> _onCapturePressed(context) async {
     // Take the Picture in a try / catch block. If anything goes wrong,
     // catch the error.
+    String l = "";
     try {
       // Attempt to take a picture and log where it's been saved
       final path = join(
@@ -224,22 +243,31 @@ class _CameraScreenState extends State {
         '${DateTime.now()}.png',
       );
       print('saved here: ' + path);
-      await controller!.takePicture().then((XFile? file) {
+      l = await controller!.takePicture().then((XFile? file) async {
         if (file != null) {
           file.saveTo(path);
+          var instance = firebase_storage.FirebaseStorage.instance;
+          try {
+            final username = await getUid();
+            await instance
+                .ref("images/$username/${file.name}")
+                .putFile(File(file.path));
+            final link = await instance
+                .ref("images/$username/${file.name}")
+                .getDownloadURL();
+            return link;
+            // navigate to page with link
+          } catch (e) {
+            print(e);
+          }
         }
+        return "";
       });
-
-      // If the picture was taken, display it on a new screen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => PreviewImageScreen(imagePath: path),
-        ),
-      );
     } catch (e) {
       // If an error occurs, log the error to the console.
       print(e);
+    } finally {
+      return l;
     }
   }
 
