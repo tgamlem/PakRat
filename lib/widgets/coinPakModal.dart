@@ -42,85 +42,87 @@ class _CoinPakModalState extends State<CoinPakModal> {
     return Stack(
       children: [
         Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Type",
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Type",
+                    ),
+                    onChanged: (value) => type = value,
                   ),
-                  onChanged: (value) => type = value,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Mint",
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Mint",
+                    ),
+                    onChanged: (value) => mint = value,
                   ),
-                  onChanged: (value) => mint = value,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Year",
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Year",
+                    ),
+                    onChanged: (value) => year = value,
                   ),
-                  onChanged: (value) => year = value,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Condition",
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Condition",
+                    ),
+                    onChanged: (value) => condition = value,
                   ),
-                  onChanged: (value) => condition = value,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Estimated Value",
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Estimated Value",
+                    ),
+                    onChanged: (value) => worth = value,
                   ),
-                  onChanged: (value) => worth = value,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "History",
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "History",
+                    ),
+                    onChanged: (value) => history = value,
                   ),
-                  onChanged: (value) => history = value,
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: TextButton(
-                  onPressed: () async {
-                    List<String> values = [year, mint, condition, worth, history];
-                    PakDataItem dataItem = new PakDataItem(type, values);
-                    PakData data = await getPak(pakName);
-                    data.addItem(dataItem);
-                    await setOrUpdatePak(data);
-                    navigateToPaks(context, pakName);
-                  },
-                  child: Text("ADD", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: TextButton(
+                    onPressed: () async {
+                      List<String> values = [year, mint, condition, worth, history];
+                      PakDataItem dataItem = new PakDataItem(type, values);
+                      PakData data = await getPak(pakName);
+                      data.addItem(dataItem);
+                      await setOrUpdatePak(data);
+                      navigateToPaks(context, pakName);
+                    },
+                    child: Text("ADD", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          )
         ),
       ],
     );
