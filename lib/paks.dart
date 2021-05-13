@@ -116,7 +116,9 @@ class PaksState extends State<Paks> {
                 ],
               body: Center(
                 child: Container(
-                  child: GridView.builder(
+                  child: Padding( 
+                    padding: EdgeInsets.fromLTRB(10, 14, 10, 14),
+                    child: GridView.builder(
                     itemCount: futureResult.data?.dataItems.length ?? 0,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -190,13 +192,13 @@ class PaksState extends State<Paks> {
                                   children: [
                                     if (item.image != null && item.image != "")
                                             Image.network(item.image,
-                                              width: 160,
-                                              height: 160,),
+                                              width: 100,
+                                              height: 100,),
                                             if (item.image == "" || item.image == null)
                                             Image.asset(
                                           'img/PakRat_White.png',
-                                          width: 160,
-                                          height: 160,
+                                          width: 100,
+                                          height: 100,
                                         ),
                                     Padding(
                                       padding : EdgeInsets.fromLTRB(12,4,0,4),
@@ -214,8 +216,9 @@ class PaksState extends State<Paks> {
                                           SizedBox(
                                             width: MediaQuery.of(context).size.width * .8,
                                             child: Text(
-                                              item.value,
+                                              item.value[0],
                                               overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: HexColor("8d8d8d")), 
@@ -247,7 +250,7 @@ class PaksState extends State<Paks> {
               ),
             ),
           ),
-          );
+            )));
         }
       });
   }

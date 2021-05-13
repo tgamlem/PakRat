@@ -138,7 +138,7 @@ class PaksState extends State<Paks> {
                                         SizedBox(
                                           width: MediaQuery.of(context).size.width * .8,
                                           child: Text(
-                                            item.value,
+                                            item.value[0],
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                                 fontSize: 20,
