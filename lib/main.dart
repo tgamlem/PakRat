@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:PakRat/home.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:PakRat/login.dart';
-void main() => runApp(App());
+import 'package:google_fonts/google_fonts.dart';
+
+void main() async => runApp(App());
 
 class App extends StatefulWidget {
   _AppState createState() => _AppState();

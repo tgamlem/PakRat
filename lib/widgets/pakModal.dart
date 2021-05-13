@@ -1,10 +1,12 @@
 import "package:flutter/material.dart";
 import 'package:hexcolor/hexcolor.dart';
+import 'package:PakRat/pakData.dart';
 
 class PakModal extends StatefulWidget {
-  final String title, desc;
+  final String title;
+  final List<String> values;
 
-  const PakModal(this.title, this.desc);
+  const PakModal(this.title, this.values);
 
   @override
   _PakModalState createState() => _PakModalState();
@@ -36,7 +38,7 @@ class _PakModalState extends State<PakModal> {
                   padding: EdgeInsets.fromLTRB(20, 20, 10, 0),
                   child: Text("Title:", style: TextStyle(fontSize: 20)),
                 ),
-                Padding (
+                Padding(
                   padding: EdgeInsets.only(top: 20),
                   child: Text(widget.title, style: TextStyle(fontSize: 20)),
                 ),
@@ -49,17 +51,25 @@ class _PakModalState extends State<PakModal> {
                   padding: EdgeInsets.fromLTRB(20, 20, 10, 0),
                   child: Text("Description:", style: TextStyle(fontSize: 20)),
                 ),
-                Padding (
+                for (final item in widget.values)
+                Padding(
                   padding: EdgeInsets.only(top: 20),
-                  child: Text(widget.desc, style: TextStyle(fontSize: 20)),
-                ),
+                  child: Wrap(
+                        children: [
+                          Text(item, maxLines: 5, style: TextStyle(fontSize: 20)),
+                        ] 
+                      ),
+                  ),
               ],
             ),
             Align(
               alignment: Alignment.bottomRight,
-              child: TextButton(onPressed: () {
-                Navigator.of(context).pop();},
-                child: Text("DONE", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("DONE",
+                    style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
               ),
             ),
           ],

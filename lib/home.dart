@@ -64,8 +64,7 @@ class HomeState extends State<Home> {
                           ],
                         ),
                         ]),
-                      ),
-                    ),
+                    )),
                     onTap: () {
                       navigateToPaks(context, item);
                     },

@@ -4,6 +4,11 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:PakRat/widgets/pakModal.dart';
 import 'package:PakRat/widgets/addPakItemModal.dart';
 import 'package:PakRat/pakData.dart';
+import 'package:hawk_fab_menu/hawk_fab_menu.dart';
+import 'package:PakRat/widgets/bookPakModal.dart';
+import 'package:PakRat/widgets/moviePakModal.dart';
+import 'package:PakRat/widgets/gamePakModal.dart';
+import 'package:PakRat/widgets/coinPakModal.dart';
 
 class Paks extends StatefulWidget {
   String pakName = "";
@@ -49,6 +54,66 @@ class PaksState extends State<Paks> {
                 title: Text(pakName),
                 leading: BackButton(color: Colors.black,),
               ),
+              body: HawkFabMenu(
+                icon: AnimatedIcons.menu_close,
+                fabColor: HexColor("9e9e9e"),
+                items: [
+                  HawkFabMenuItem(
+                    label: "Books",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return BookPakModal(pakName);
+                          });
+                    },
+                    icon: Icon(Icons.book_outlined),
+                  ),
+                  HawkFabMenuItem(
+                    label: "Movies",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return MoviePakModal(pakName);
+                          });
+                    },
+                    icon: Icon(Icons.movie_outlined),
+                  ),
+                  HawkFabMenuItem(
+                    label: "Games",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return GamePakModal(pakName);
+                          });
+                    },
+                    icon: Icon(Icons.videogame_asset_outlined),
+                  ),
+                  HawkFabMenuItem(
+                    label: "Coins",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CoinPakModal(pakName);
+                          });
+                    },
+                    icon: Icon(Icons.attach_money_outlined),
+                  ),
+                  HawkFabMenuItem(
+                    label: "Other",
+                    ontap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AddPakItemModal(pakName);
+                          });
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                ],
               body: Center(
                 child: Container(
                   child: GridView.builder(
@@ -123,12 +188,16 @@ class PaksState extends State<Paks> {
                               Center(
                                 child: Column(
                                   children: [
-                                    Image.asset(
-                                      'img/PakRat_White.png',
-                                      width: 160,
-                                      height: 160,
-                                      fit: BoxFit.contain,
-                                    ),
+                                    if (item.image != null && item.image != "")
+                                            Image.network(item.image,
+                                              width: 160,
+                                              height: 160,),
+                                            if (item.image == "" || item.image == null)
+                                            Image.asset(
+                                          'img/PakRat_White.png',
+                                          width: 160,
+                                          height: 160,
+                                        ),
                                     Padding(
                                       padding : EdgeInsets.fromLTRB(12,4,0,4),
                                       child: Column(
@@ -178,17 +247,6 @@ class PaksState extends State<Paks> {
               ),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
-              backgroundColor: HexColor("9e9e9e"),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AddPakItemModal(pakName);
-                    });
-              },
-            ),
           );
         }
       });
