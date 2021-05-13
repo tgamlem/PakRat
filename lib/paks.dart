@@ -134,6 +134,7 @@ class PaksState extends State<Paks> {
                       return GestureDetector(
                         child: Dismissible(
                           key: Key(item.title),
+                          direction: DismissDirection.startToEnd,
                           onDismissed: (direction) {
                             setState(() {
                               futureResult.data!.dataItems.removeAt(index);
