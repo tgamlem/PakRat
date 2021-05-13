@@ -55,7 +55,7 @@ class PaksState extends State<Paks> {
                     itemCount: futureResult.data?.dataItems.length ?? 0,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 1/2,
+                    childAspectRatio: 1,
                     ),
                     itemBuilder: (BuildContext ctx, index) {
                        if (futureResult.data == null) {
@@ -64,7 +64,7 @@ class PaksState extends State<Paks> {
 
                     
                       final item = futureResult.data!.dataItems[index];
-                      child: GestureDetector(
+                      return GestureDetector(
                         child: Dismissible(
                           key: Key(item.title),
                           onDismissed: (direction) {
