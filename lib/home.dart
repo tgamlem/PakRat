@@ -51,19 +51,19 @@ class HomeState extends State<Home> {
                       color: HexColor("fcfcfc"),
                       child: Center(
                         child: Column(
-                          children: [
-                            Image.asset(
-                                          'img/PakRat_White.png',
-                                          width: 100,
-                                          height: 100,
-                                        ),
-                            Row(
+                        children: [ 
+                          Image.asset(
+                            'img/PakRat_White.png',
+                            width: 100,
+                            height: 100,
+                          ),
+                          Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(item, style: TextStyle(fontSize: 30)),
                           ],
-                        ),]
-                      ),
+                        ),
+                        ]),
                     )),
                     onTap: () {
                       navigateToPaks(context, item);

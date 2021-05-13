@@ -52,6 +52,7 @@ class PaksState extends State<Paks> {
               drawer: SideMenu(),
               appBar: AppBar(
                 title: Text(pakName),
+                leading: BackButton(color: Colors.black,),
               ),
               body: HawkFabMenu(
                 icon: AnimatedIcons.menu_close,
@@ -113,156 +114,141 @@ class PaksState extends State<Paks> {
                     icon: Icon(Icons.add),
                   ),
                 ],
-                body: Padding(
-                  padding: EdgeInsets.fromLTRB(10, 14, 10, 14),
-                  child: ListView.builder(
+              body: Center(
+                child: Container(
+                  child: GridView.builder(
                     itemCount: futureResult.data?.dataItems.length ?? 0,
-                    itemBuilder: (context, index) {
-                      if (futureResult.data == null) {
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
+                    ),
+                    itemBuilder: (BuildContext ctx, index) {
+                       if (futureResult.data == null) {
                         return Container();
                       } else {
-                        final item = futureResult.data!.dataItems[index];
-                        return GestureDetector(
-                          child: Dismissible(
-                            key: Key(item.title),
-                            onDismissed: (direction) {
-                              setState(() {
-                                futureResult.data!.dataItems.removeAt(index);
-                              });
 
-                              PakData _pakData = futureResult.data!;
-                              _pakData.removeItem(
-                                  PakDataItem(item.title, item.value));
-                              setOrUpdatePak(_pakData);
+                    
+                      final item = futureResult.data!.dataItems[index];
+                      return GestureDetector(
+                        child: Dismissible(
+                          key: Key(item.title),
+                          onDismissed: (direction) {
+                            setState(() {
+                              futureResult.data!.dataItems.removeAt(index);
+                            });
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content:
-                                          Text("${item.title} dismissed")));
-                            },
-                            background: Container(
-                              padding: EdgeInsets.only(left: 12),
-                              child: Icon(Icons.delete),
-                              alignment: Alignment.centerLeft,
-                              color: Colors.red[700],
-                            ),
-                            confirmDismiss: (dismissDirection) {
-                              return showDialog(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        "Delete item?\n(This action will permanately delete this item)",
-                                        //style: GoogleFonts.openSans()
-                                      ),
-                                      actions: <Widget>[
-                                        // button to confirm delete
-                                        TextButton(
-                                          child: Text("Delete"),
-                                          onPressed: () async {
-                                            Navigator.of(context).pop(true);
-                                          },
-                                        ),
-                                        // button to cancel deleting
-                                        TextButton(
-                                          child: Text("Cancel"),
-                                          onPressed: () {
-                                            Navigator.of(context).pop(false);
-                                          },
-                                        )
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Card(
-                              color: HexColor("fcfcfc"),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: ClipPath(
-                                clipper: ShapeBorderClipper(
-                                  shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                                ),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border(left: BorderSide(color: HexColor("4fc3f7"), width: 6))
-                                  ),
-                                  child: Wrap(direction: Axis.horizontal, children: [
-                                Center(
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(12, 0, 0, 4),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            if (item.image != null && item.image != "")
-                                            Image.network(item.image,
-                                              width: 100,
-                                              height: 100,),
-                                            if (item.image == "" || item.image == null)
-                                            Image.asset(
-                                          'img/PakRat_White.png',
-                                          width: 100,
-                                          height: 100,
-                                        ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  .8,
-                                              child: Text(
-                                                item.title,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(fontSize: 30),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  .8,
-                                              child: Text(
-                                                item.value[0],
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    color: HexColor("8d8d8d")),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ]),
-                            ),
-                              ),
-                            ),
+                            PakData _pakData = futureResult.data!;
+                            _pakData
+                                .removeItem(PakDataItem(item.title, item.value));
+                            setOrUpdatePak(_pakData);
+
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("${item.title} dismissed")));
+                          },
+                          background: Container(
+                            padding: EdgeInsets.only(left: 12),
+                            child: Icon(Icons.delete),
+                            alignment: Alignment.centerLeft,
+                            color: Colors.red[700],
                           ),
-                          onTap: () {
-                            showDialog(
+                          confirmDismiss: (dismissDirection) {
+                            return showDialog(
                                 context: context,
+                                barrierDismissible: true,
                                 builder: (BuildContext context) {
-                                  return PakModal(
-                                    item.title,
-                                    item.value,
+                                  return AlertDialog(
+                                    title: Text(
+                                      "Delete item?\n(This action will permanately delete this item)",
+                                      //style: GoogleFonts.openSans()
+                                    ),
+                                    actions: <Widget>[
+                                      // button to confirm delete
+                                      TextButton(
+                                        child: Text("Delete"),
+                                        onPressed: () async {
+                                          Navigator.of(context).pop(true);
+                                        },
+                                      ),
+                                      // button to cancel deleting
+                                      TextButton(
+                                        child: Text("Cancel"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop(false);
+                                        },
+                                      )
+                                    ],
                                   );
                                 });
                           },
-                        );
-                      }
-                    },
-                  ),
-                ),
+                          child: Card(
+                            color: HexColor("fcfcfc"),
+                            child: Wrap(
+                              direction: Axis.horizontal,
+                              children: [
+                              Center(
+                                child: Column(
+                                  children: [
+                                    if (item.image != null && item.image != "")
+                                            Image.network(item.image,
+                                              width: 160,
+                                              height: 160,),
+                                            if (item.image == "" || item.image == null)
+                                            Image.asset(
+                                          'img/PakRat_White.png',
+                                          width: 160,
+                                          height: 160,
+                                        ),
+                                    Padding(
+                                      padding : EdgeInsets.fromLTRB(12,4,0,4),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width * .8,
+                                            child: Text(
+                                              item.title,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(fontSize: 30),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width * .8,
+                                            child: Text(
+                                              item.value,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: HexColor("8d8d8d")), 
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]),
+                          ),
+                        ),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return PakModal(
+                                item.title,
+                                item.value,
+                              );
+                            },
+                            );
+                      },
+                    );
+                  }
+                },
               ),
-            );
-          }
-        });
+            ),
+          ),
+          );
+        }
+      });
   }
 }
