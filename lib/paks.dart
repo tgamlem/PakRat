@@ -64,7 +64,6 @@ class PaksState extends State<Paks> {
 
                     
                       final item = futureResult.data!.dataItems[index];
-                      return Inkwell()
                       child: GestureDetector(
                         child: Dismissible(
                           key: Key(item.title),
