@@ -188,18 +188,21 @@ class PaksState extends State<Paks> {
                               direction: Axis.horizontal,
                               children: [
                               Center(
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 10),
                                 child: Column(
                                   children: [
                                     if (item.image != null && item.image != "")
-                                            Image.network(item.image,
-                                              width: 100,
-                                              height: 100,),
-                                            if (item.image == "" || item.image == null)
-                                            Image.asset(
-                                          'img/PakRat_White.png',
-                                          width: 100,
-                                          height: 100,
-                                        ),
+                                      Image.network(item.image,
+                                        width: 100,
+                                        height: 100,
+                                      ),
+                                    if (item.image == "" || item.image == null)
+                                      Image.asset(
+                                        'img/PakRat_White.png',
+                                        width: 100,
+                                        height: 100,
+                                      ),
                                     Padding(
                                       padding : EdgeInsets.fromLTRB(12,4,0,4),
                                       child: Column(
@@ -230,7 +233,7 @@ class PaksState extends State<Paks> {
                                   ],
                                 ),
                               ),
-                            ]),
+                            )]),
                           ),
                         ),
                         onTap: () {
