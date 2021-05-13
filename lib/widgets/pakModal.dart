@@ -54,8 +54,12 @@ class _PakModalState extends State<PakModal> {
                 for (final item in widget.values)
                 Padding(
                   padding: EdgeInsets.only(top: 20),
-                  child: Text(item, style: TextStyle(fontSize: 20)),
-                ),
+                  child: Wrap(
+                        children: [
+                          Text(item, maxLines: 5, style: TextStyle(fontSize: 20)),
+                        ] 
+                      ),
+                  ),
               ],
             ),
             Align(
