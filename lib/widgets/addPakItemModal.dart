@@ -61,7 +61,7 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
                   IconButton(
                     icon: Icon(Icons.camera),
                     onPressed: () {
-                      navigateToCamera(context, pakName);
+                      navigateToCamera(context, pakName, "other");
                     }),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 14, 10, 0),
@@ -114,7 +114,7 @@ Future navigateToPaks(context, String pakName) async {
       context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }
 
-Future navigateToCamera(context, String pakName) async {
+Future navigateToCamera(context, String pakName, String form) async {
   Navigator.push(
-      context, MaterialPageRoute(builder: (context) => CameraScreen(pakName)));
+      context, MaterialPageRoute(builder: (context) => CameraScreen(pakName, form)));
 }

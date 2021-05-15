@@ -2,16 +2,23 @@ import 'package:PakRat/paks.dart';
 import 'package:flutter/material.dart';
 import 'package:PakRat/pakData.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:PakRat/camera_screen.dart';
 
 class MoviePakModal extends StatefulWidget {
   String pakName = "";
+  String imgURL = "";
 
   MoviePakModal(String pname) {
     pakName = pname;
   }
 
+  MoviePakModal.img(String pname, String img) {
+    pakName = pname;
+    imgURL = img;
+  }
+
   @override
-  _MoviePakModalState createState() => _MoviePakModalState(pakName);
+  _MoviePakModalState createState() => _MoviePakModalState(pakName, imgURL);
 }
 
 class _MoviePakModalState extends State<MoviePakModal> {
@@ -21,9 +28,11 @@ class _MoviePakModalState extends State<MoviePakModal> {
   String genre = "";
   String cast = "";
   String summary = "";
+  String imgURL = "";
 
-  _MoviePakModalState(String pname) {
+  _MoviePakModalState(String pname, String img) {
     pakName = pname;
+    imgURL = img;
   }
 
   @override
@@ -45,6 +54,16 @@ class _MoviePakModalState extends State<MoviePakModal> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (imgURL != "")
+                  Image.network(imgURL,
+                    width: 100,
+                    height: 100,),
+                if (imgURL == "")
+                  IconButton(
+                    icon: Icon(Icons.camera),
+                    onPressed: () {
+                      navigateToCamera(context, pakName, "movie");
+                    }),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
                   child: TextField(
@@ -106,7 +125,9 @@ class _MoviePakModalState extends State<MoviePakModal> {
                       await setOrUpdatePak(data);
                       navigateToPaks(context, pakName);
                     },
-                    child: Text("ADD", style: TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
+                    child: Text("ADD",
+                        style:
+                            TextStyle(fontSize: 16, color: HexColor("bbdefb"))),
                   ),
                 ),
               ],
@@ -119,5 +140,11 @@ class _MoviePakModalState extends State<MoviePakModal> {
 }
 
 Future navigateToPaks(context, String pakName) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Paks(pakName)));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => Paks(pakName)));
+}
+
+Future navigateToCamera(context, String pakName, String form) async {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => CameraScreen(pakName, form)));
 }

@@ -31,6 +31,10 @@
 import 'dart:io';
 
 import 'package:PakRat/widgets/addPakItemModal.dart';
+import 'package:PakRat/widgets/bookPakModal.dart';
+import 'package:PakRat/widgets/coinPakModal.dart';
+import 'package:PakRat/widgets/gamePakModal.dart';
+import 'package:PakRat/widgets/moviePakModal.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
@@ -40,14 +44,16 @@ import 'pakData.dart';
 
 class CameraScreen extends StatefulWidget {
   String pakName = "";
+  String formType = "";
 
-  CameraScreen(String pname) {
+  CameraScreen(String pname, String form) {
     pakName = pname;
+    formType = form;
   }
 
   @override
   _CameraScreenState createState() {
-    return _CameraScreenState(pakName);
+    return _CameraScreenState(pakName, formType);
   }
 }
 
@@ -57,9 +63,11 @@ class _CameraScreenState extends State {
   int? selectedCameraIdx;
   String? imagePath;
   String pakName = "";
+  String formType = "";
 
-  _CameraScreenState(String pakName) {
+  _CameraScreenState(String pakName, formType) {
     this.pakName = pakName;
+    this.formType = formType;
   }
 
   @override
@@ -115,7 +123,7 @@ class _CameraScreenState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Click To Share'),
+        title: const Text('Camera'),
         backgroundColor: Colors.blueGrey,
       ),
       body: Container(
@@ -180,7 +188,17 @@ class _CameraScreenState extends State {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AddPakItemModal.img(pakName, image);
+                        if (formType == "book") {
+                          return BookPakModal.img(pakName, image);
+                        } else if (formType == "coin") {
+                          return CoinPakModal.img(pakName, image);
+                        } else if (formType == "game") {
+                          return GamePakModal.img(pakName, image);
+                        } else if (formType == "movie") {
+                          return MoviePakModal.img(pakName, image);
+                        } else {
+                          return AddPakItemModal.img(pakName, image);
+                        }
                       });
                 })
           ],

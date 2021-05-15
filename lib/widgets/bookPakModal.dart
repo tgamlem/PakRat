@@ -2,16 +2,23 @@ import 'package:PakRat/paks.dart';
 import 'package:flutter/material.dart';
 import 'package:PakRat/pakData.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:PakRat/camera_screen.dart';
 
 class BookPakModal extends StatefulWidget {
   String pakName = "";
+  String imgURL = "";
 
   BookPakModal(String pname) {
     pakName = pname;
   }
 
+  BookPakModal.img(String pname, String img) {
+    pakName = pname;
+    imgURL = img;
+  }
+
   @override
-  _BookPakModalState createState() => _BookPakModalState(pakName);
+  _BookPakModalState createState() => _BookPakModalState(pakName, imgURL);
 }
 
 class _BookPakModalState extends State<BookPakModal> {
@@ -22,9 +29,11 @@ class _BookPakModalState extends State<BookPakModal> {
   String genre = "";
   String isbn = "";
   String summary = "";
+  String imgURL = "";
 
-  _BookPakModalState(String pname) {
+  _BookPakModalState(String pname, String imgURL) {
     pakName = pname;
+    this.imgURL = imgURL;
   }
 
   @override
@@ -46,6 +55,16 @@ class _BookPakModalState extends State<BookPakModal> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (imgURL != "")
+                  Image.network(imgURL,
+                    width: 100,
+                    height: 100,),
+                if (imgURL == "")
+                  IconButton(
+                    icon: Icon(Icons.camera),
+                    onPressed: () {
+                      navigateToCamera(context, pakName, "book");
+                    }),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
                   child: TextField(
@@ -110,7 +129,13 @@ class _BookPakModalState extends State<BookPakModal> {
                   alignment: Alignment.bottomRight,
                   child: TextButton(
                     onPressed: () async {
-                      List<String> values = [author, date, genre, isbn, summary];
+                      List<String> values = [
+                        author,
+                        date,
+                        genre,
+                        isbn,
+                        summary
+                      ];
                       PakDataItem dataItem = new PakDataItem(title, values);
                       PakData data = await getPak(pakName);
                       data.addItem(dataItem);
@@ -134,4 +159,9 @@ class _BookPakModalState extends State<BookPakModal> {
 Future navigateToPaks(context, String pakName) async {
   Navigator.push(
       context, MaterialPageRoute(builder: (context) => Paks(pakName)));
+}
+
+Future navigateToCamera(context, String pakName, String form) async {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => CameraScreen(pakName, form)));
 }
