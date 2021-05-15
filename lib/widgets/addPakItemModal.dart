@@ -58,7 +58,7 @@ class _AddPakItemModalState extends State<AddPakItemModal> {
                     width: 100,
                     height: 100,),
                 if (imgURL == "")
-                IconButton(
+                  IconButton(
                     icon: Icon(Icons.camera),
                     onPressed: () {
                       navigateToCamera(context, pakName);
