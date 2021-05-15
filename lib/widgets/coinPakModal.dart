@@ -68,6 +68,8 @@ class _CoinPakModalState extends State<CoinPakModal> {
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 16, 10, 0),
                 child: TextField(
+                  keyboardType: TextInputType.multiline,
+                    maxLines: null,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Type",
@@ -98,6 +100,8 @@ class _CoinPakModalState extends State<CoinPakModal> {
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
                 child: TextField(
+                  keyboardType: TextInputType.multiline,
+                    maxLines: null,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Condition",
@@ -108,6 +112,8 @@ class _CoinPakModalState extends State<CoinPakModal> {
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
                 child: TextField(
+                  keyboardType: TextInputType.multiline,
+                    maxLines: null,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Estimated Value",
@@ -118,6 +124,8 @@ class _CoinPakModalState extends State<CoinPakModal> {
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
                 child: TextField(
+                  keyboardType: TextInputType.multiline,
+                    maxLines: null,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "History",
@@ -136,7 +144,7 @@ class _CoinPakModalState extends State<CoinPakModal> {
                       worth,
                       history
                     ];
-                    PakDataItem dataItem = new PakDataItem(type, values);
+                    PakDataItem dataItem = new PakDataItem(type, values, i: imgURL);
                     PakData data = await getPak(pakName);
                     data.addItem(dataItem);
                     await setOrUpdatePak(data);

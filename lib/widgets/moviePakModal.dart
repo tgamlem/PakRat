@@ -97,6 +97,8 @@ class _MoviePakModalState extends State<MoviePakModal> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
                   child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: "Cast",
@@ -107,6 +109,8 @@ class _MoviePakModalState extends State<MoviePakModal> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
                   child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: "About",
@@ -119,7 +123,7 @@ class _MoviePakModalState extends State<MoviePakModal> {
                   child: TextButton(
                     onPressed: () async {
                       List<String> values = [genre, date, cast, summary];
-                      PakDataItem dataItem = new PakDataItem(title, values);
+                      PakDataItem dataItem = new PakDataItem(title, values, i: imgURL);
                       PakData data = await getPak(pakName);
                       data.addItem(dataItem);
                       await setOrUpdatePak(data);

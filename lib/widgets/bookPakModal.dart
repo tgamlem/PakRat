@@ -118,6 +118,8 @@ class _BookPakModalState extends State<BookPakModal> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
                   child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: "Book Description",
@@ -136,7 +138,7 @@ class _BookPakModalState extends State<BookPakModal> {
                         isbn,
                         summary
                       ];
-                      PakDataItem dataItem = new PakDataItem(title, values);
+                      PakDataItem dataItem = new PakDataItem(title, values, i: imgURL);
                       PakData data = await getPak(pakName);
                       data.addItem(dataItem);
                       await setOrUpdatePak(data);

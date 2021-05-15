@@ -31,32 +31,23 @@ class _PakModalState extends State<PakModal> {
             child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 10, 0),
-                  child: Text("Title:", style: TextStyle(fontSize: 20)),
+                  padding: EdgeInsets.only(top: 20, left: 20),
+                  child: Text(widget.title, style: TextStyle(fontSize: 30)),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Text(widget.title, style: TextStyle(fontSize: 20)),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 20, 10, 0),
-                  child: Text("Description:", style: TextStyle(fontSize: 20)),
-                ),
+              
                 for (final item in widget.values)
                 Padding(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 10, left: 20),
                   child: Wrap(
                         children: [
-                          Text(item, maxLines: 5, style: TextStyle(fontSize: 20)),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(item + "\n", maxLines: 5, style: TextStyle(fontSize: 20)),
+                          ),
                         ] 
                       ),
                   ),
