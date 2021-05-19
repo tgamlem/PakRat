@@ -20,7 +20,7 @@ class HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    _paks = getAllPakNames();
+    _paks = getAllPakNames(); // get the paks for this user
   }
 
   @override
@@ -29,7 +29,7 @@ class HomeState extends State<Home> {
         future: _paks,
         builder: (context, futureResult) {
           if (!futureResult.hasData) {
-            return CircularProgressIndicator();
+            return CircularProgressIndicator(); // display a loading screen until page is built
           } else {
             return Scaffold(
               backgroundColor: HexColor("eeeeee"),
@@ -52,6 +52,7 @@ class HomeState extends State<Home> {
                       child: Center(
                         child: Column(
                         children: [ 
+                          // PakRat logo
                           Image.asset(
                             'img/PakRat_White.png',
                             width: 100,
@@ -74,6 +75,7 @@ class HomeState extends State<Home> {
                   return Container(height: 0, width: 0);
                 },
               ),
+              // add a new pak
               floatingActionButton: FloatingActionButton(
                 child: Icon(Icons.add),
                 backgroundColor: HexColor("9e9e9e"),
@@ -91,6 +93,7 @@ class HomeState extends State<Home> {
   }
 }
 
+// get userID from local storage
 Future<String> getUID() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String id = prefs.getString('user_id')!;
@@ -98,6 +101,7 @@ Future<String> getUID() async {
   return id;
 }
 
+// navigate to the paks page
 Future navigateToPaks(context, String pakName) async {
   Navigator.push(
       context, MaterialPageRoute(builder: (context) => Paks(pakName)));

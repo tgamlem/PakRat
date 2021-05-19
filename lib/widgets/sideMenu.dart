@@ -6,6 +6,7 @@ import '../paks.dart';
 import '../pakData.dart';
 import '../wishlist.dart';
 
+// PakRat's navigation hub
 class SideMenu extends StatefulWidget {
   @override
   SideMenuState createState() {
@@ -45,11 +46,13 @@ class SideMenuState extends State<SideMenu> {
                           fit: BoxFit.contain, image: AssetImage('img/PakRat_White.png')),
                     ),
                   ),
+                  // Home screen
                   ListTile(
                     leading: Icon(Icons.home),
                     title: Text('Home'),
                     onTap: () => {navigateToHome(context)},
                   ),
+                  // list all pak pages
                   ExpansionTile(
                     leading: Icon(Icons.toc_rounded),
                     title: Text('Paks'),
@@ -66,11 +69,13 @@ class SideMenuState extends State<SideMenu> {
                           }),
                     ],
                   ),
+                  // wishlist screen
                   ListTile(
                     leading: Icon(Icons.star_border_outlined),
                     title: Text('Wishlist'),
                     onTap: () => {navigateToWishlist(context)}
                   ),
+                  // login screen
                   ListTile(
                       leading: Icon(Icons.login),
                       title: Text('Login'),
@@ -83,19 +88,23 @@ class SideMenuState extends State<SideMenu> {
   }
 }
 
+// navigate to Home page
 Future navigateToHome(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
 }
 
+// navigate to Paks page
 Future navigateToPaks(context, String pakName) async {
   Navigator.push(
       context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }
 
+// navigate to Login page
 Future navigateToLogin(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
 }
 
+// navigate to Wishlist page
 Future navigateToWishlist(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Wishlist()));
 }

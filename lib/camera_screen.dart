@@ -28,6 +28,8 @@
  * THE SOFTWARE.
  */
 
+// developed from open source project
+
 import 'dart:io';
 
 import 'package:PakRat/widgets/addPakItemModal.dart';
@@ -73,6 +75,7 @@ class _CameraScreenState extends State {
   @override
   void initState() {
     super.initState();
+    // find available cameras
     availableCameras().then((availableCameras) {
       cameras = availableCameras;
 
@@ -180,6 +183,7 @@ class _CameraScreenState extends State {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.max,
           children: [
+            // take a photo
             FloatingActionButton(
                 child: Icon(Icons.camera),
                 backgroundColor: Colors.blueGrey,
@@ -188,6 +192,7 @@ class _CameraScreenState extends State {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
+                        // determine what form to push to the screen
                         if (formType == "book") {
                           return BookPakModal.img(pakName, image);
                         } else if (formType == "coin") {

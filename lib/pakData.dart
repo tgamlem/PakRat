@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// get the userID from local storage
 Future<String> getUid() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? uid = prefs.getString('user_id');
@@ -72,6 +73,7 @@ Future<bool> setOrUpdatePak(PakData pakData) async {
   return success;
 }
 
+// get collection of all pak names for the user
 Future<List<String>> getAllPakNames() async {
   const String COLLECTION = "paks";
   String uid = await getUid();
@@ -88,6 +90,7 @@ Future<List<String>> getAllPakNames() async {
   return names;
 }
 
+// a pak is a collection of items in the pak
 class PakData {
   List<PakDataItem> dataItems = [];
   String pakName = "";
@@ -97,10 +100,12 @@ class PakData {
     pakName = n;
   }
 
+  // add an item to the pak
   addItem(PakDataItem item) {
     dataItems.add(item);
   }
 
+  // remove an item from the pak
   removeItem(PakDataItem itemToRemove) {
     for (var item in dataItems) {
       if (itemToRemove.title == item.title && itemToRemove.value == item.value)
@@ -108,6 +113,7 @@ class PakData {
     }
   }
 
+  // encode the pak data into json
   String toJson() {
     String json = "[";
     for (var item in dataItems) {
@@ -121,26 +127,30 @@ class PakData {
   }
 }
 
+// items in a pak
 class PakDataItem {
   /// Title of pak entry
   String title = "";
 
-  /// Value of pak entry
+  /// Values of pak entry
   List<String> value = [];
 
   String image = "";
 
+  // title, values, and image (optional)
   PakDataItem(String t, List<String> v, {String i = ""}) {
     title = t;
     value = v;
     image = i;
   }
 
+  // decode pak item from json
   PakDataItem.fromJson(Map<String, dynamic> json)
       : title = json['title'],
         value = jsonDecode(json['value']).cast<String>(),
         image = json['image'];
 
+  // encode pak item into json
   Map<String, dynamic> toJson() => {
         "title": title,
         'value': jsonEncode(value),

@@ -37,6 +37,7 @@ class WishlistState extends State<Wishlist> {
           if (!isHydrated) {
             return CircularProgressIndicator();
           } else if (!futureResult.hasData && isHydrated && first) {
+            // if the user doesn't have an existing wishlist
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -44,6 +45,7 @@ class WishlistState extends State<Wishlist> {
                 });
             return CircularProgressIndicator();
           } else {
+            // display the wishlist
             return Scaffold(
               drawer: SideMenu(),
               appBar: AppBar(
@@ -59,6 +61,7 @@ class WishlistState extends State<Wishlist> {
                     return GestureDetector(
                       child: Dismissible(
                         key: Key(item.title),
+                        // slide to delete items
                         onDismissed: (direction) {
                           setState(() {
                             futureResult.data!.dataItems.removeAt(index);
@@ -78,6 +81,7 @@ class WishlistState extends State<Wishlist> {
                           alignment: Alignment.centerLeft,
                           color: Colors.red[700],
                         ),
+                        // have users confirm their delete
                         confirmDismiss: (dismissDirection) {
                           return showDialog(
                               context: context,
@@ -148,6 +152,7 @@ class WishlistState extends State<Wishlist> {
   }
 }
 
+// navigate back to this page
 Future navigateToWishlist(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Wishlist()));
 }

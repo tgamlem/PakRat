@@ -14,6 +14,7 @@ class _AddPakState extends State<AddPak> {
 
   @override
   Widget build(BuildContext context) {
+    // return a dialog box
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -23,6 +24,7 @@ class _AddPakState extends State<AddPak> {
     );
   }
 
+  // the content of the dialog
   contentBox(context) {
     return Stack(
       children: [
@@ -61,6 +63,7 @@ class _AddPakState extends State<AddPak> {
   }
 }
 
+// navigate to the Paks page
 Future navigateToPaks(context, String pakName) async {
   Navigator.push(
       context, MaterialPageRoute(builder: (context) => Paks(pakName)));

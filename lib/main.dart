@@ -43,7 +43,7 @@ class _AppState extends State<App> {
           accentColor: HexColor("607d8b"),
           fontFamily: GoogleFonts.sourceSansPro().fontFamily,
       ),
-      home: Login(),
+      home: Login(), // start on login page
     );
   }
 }

@@ -38,6 +38,7 @@ class _CoinPakModalState extends State<CoinPakModal> {
 
   @override
   Widget build(BuildContext context) {
+    // return a dialog box
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -47,6 +48,7 @@ class _CoinPakModalState extends State<CoinPakModal> {
     );
   }
 
+  // the content of the dialog
   contentBox(context) {
     return Stack(
       children: [
@@ -55,10 +57,12 @@ class _CoinPakModalState extends State<CoinPakModal> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // if there is an image URL, display it
               if (imgURL != "")
                   Image.network(imgURL,
                     width: 100,
                     height: 100,),
+                    // if there is no image, display the camera button
                 if (imgURL == "")
                   IconButton(
                     icon: Icon(Icons.camera),
@@ -136,6 +140,7 @@ class _CoinPakModalState extends State<CoinPakModal> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: TextButton(
+                  // add item to database
                   onPressed: () async {
                     List<String> values = [
                       year,
@@ -163,11 +168,13 @@ class _CoinPakModalState extends State<CoinPakModal> {
   }
 }
 
+// navigate to the Paks page
 Future navigateToPaks(context, String pakName) async {
   Navigator.push(
       context, MaterialPageRoute(builder: (context) => Paks(pakName)));
 }
 
+// navigate to the Camera page
 Future navigateToCamera(context, String pakName, String form) async {
   Navigator.push(
       context, MaterialPageRoute(builder: (context) => CameraScreen(pakName, form)));

@@ -16,6 +16,7 @@ class Login extends StatelessWidget {
       drawer: SideMenu(),
       appBar: AppBar(title: Text('Login')),
       body: Center(
+        // username and password text boxes
           child: Column(
         children: [
           Padding(
@@ -39,6 +40,7 @@ class Login extends StatelessWidget {
               onChanged: (value) => password = value,
             ),
           ),
+          // sign up/sign in buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -64,6 +66,7 @@ class Login extends StatelessWidget {
   }
 }
 
+// class to allow users to login to app/database
 class Auther {
   Auther() {
     initialize();
@@ -72,14 +75,17 @@ class Auther {
   var instance;
   UserCredential? user = null;
 
+  // initialize firebase
   void initialize() {
     instance = FirebaseAuth.instance;
   }
 
+  // get the userID to use in app
   String getId() {
     return user?.user?.uid.toString() ?? "";
   }
 
+  // register a new email and password to the database
   void register(email, password) async {
     bool success = true;
     try {
@@ -102,6 +108,7 @@ class Auther {
     }
   }
 
+  // sign in to the app and database
   void signIn(email, password) async {
     bool success = true;
     try {
@@ -119,11 +126,13 @@ class Auther {
     }
   }
 
+  // save user id to local memory
   void saveUID(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('user_id', id);
   }
 
+  // get user id from local memory
   Future<String> getUID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = prefs.getString('user_id')!;

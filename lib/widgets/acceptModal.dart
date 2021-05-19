@@ -4,6 +4,7 @@ import 'package:PakRat/pakData.dart';
 import 'package:PakRat/wishlist.dart';
 import 'package:PakRat/home.dart';
 
+// modal for users to accept to create a wishlist
 class AcceptModal extends StatefulWidget {
   final String message;
 
@@ -16,6 +17,7 @@ class AcceptModal extends StatefulWidget {
 class _AcceptModalState extends State<AcceptModal> {
   @override
   Widget build(BuildContext context) {
+    // return a dialog box
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -25,6 +27,7 @@ class _AcceptModalState extends State<AcceptModal> {
     );
   }
 
+  // content of the dialog box
   contentBox(context) {
     return Stack(
       children: [
@@ -77,10 +80,12 @@ class _AcceptModalState extends State<AcceptModal> {
   }
 }
 
+// navigate to the wishlist page
 Future navigateToWishlist(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Wishlist()));
 }
 
+// navigate to the home page
 Future navigateToHome(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
 }

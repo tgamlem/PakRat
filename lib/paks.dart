@@ -46,6 +46,7 @@ class PaksState extends State<Paks> {
         future: pakData,
         builder: (context, futureResult) {
           if (!isHydrated) {
+            // if page isn't loaded, display loading screen
             return CircularProgressIndicator();
           } else {
             return Scaffold(
@@ -60,10 +61,12 @@ class PaksState extends State<Paks> {
                     },
                   ),
                 ),
-                body: HawkFabMenu(
+                // special floating action button that expands with multiple options
+                  body: HawkFabMenu(
                     icon: AnimatedIcons.menu_close,
                     fabColor: HexColor("9e9e9e"),
                     items: [
+                      // book form
                       HawkFabMenuItem(
                         label: "Books",
                         ontap: () {
@@ -75,6 +78,7 @@ class PaksState extends State<Paks> {
                         },
                         icon: Icon(Icons.book_outlined),
                       ),
+                      // movie form
                       HawkFabMenuItem(
                         label: "Movies",
                         ontap: () {
@@ -86,6 +90,7 @@ class PaksState extends State<Paks> {
                         },
                         icon: Icon(Icons.movie_outlined),
                       ),
+                      // game form
                       HawkFabMenuItem(
                         label: "Games",
                         ontap: () {
@@ -97,6 +102,7 @@ class PaksState extends State<Paks> {
                         },
                         icon: Icon(Icons.videogame_asset_outlined),
                       ),
+                      // coin form
                       HawkFabMenuItem(
                         label: "Coins",
                         ontap: () {
@@ -108,6 +114,7 @@ class PaksState extends State<Paks> {
                         },
                         icon: Icon(Icons.attach_money_outlined),
                       ),
+                      // other form
                       HawkFabMenuItem(
                         label: "Other",
                         ontap: () {
@@ -120,10 +127,12 @@ class PaksState extends State<Paks> {
                         icon: Icon(Icons.add),
                       ),
                     ],
+                    // the rest of the page
                     body: Center(
                       child: Container(
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(10, 14, 10, 14),
+                          // display items in a grid
                           child: GridView.builder(
                             itemCount: futureResult.data?.dataItems.length ?? 0,
                             gridDelegate:
@@ -141,6 +150,7 @@ class PaksState extends State<Paks> {
                                   child: Dismissible(
                                     key: Key(item.title),
                                     direction: DismissDirection.startToEnd,
+                                    // slide to delete item
                                     onDismissed: (direction) {
                                       setState(() {
                                         futureResult.data!.dataItems
@@ -164,6 +174,7 @@ class PaksState extends State<Paks> {
                                       color: Colors.red[700],
                                     ),
                                     confirmDismiss: (dismissDirection) {
+                                      // have users confirm their delete
                                       return showDialog(
                                           context: context,
                                           barrierDismissible: true,
@@ -205,6 +216,7 @@ class PaksState extends State<Paks> {
                                                     EdgeInsets.only(top: 10),
                                                 child: Column(
                                                   children: [
+                                                    // display custom image or PakRat logo
                                                     if (item.image != null &&
                                                         item.image != "")
                                                       Image.network(
@@ -227,6 +239,7 @@ class PaksState extends State<Paks> {
                                                         mainAxisSize:
                                                             MainAxisSize.min,
                                                         children: [
+                                                          // title of item
                                                           SizedBox(
                                                             width: MediaQuery.of(
                                                                         context)
@@ -242,6 +255,7 @@ class PaksState extends State<Paks> {
                                                                   fontSize: 30),
                                                             ),
                                                           ),
+                                                          // value of item
                                                           SizedBox(
                                                             width: MediaQuery.of(
                                                                         context)
@@ -274,6 +288,7 @@ class PaksState extends State<Paks> {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
+                                        // display title and values when tapped
                                         return PakModal(
                                           item.title,
                                           item.value,
@@ -293,6 +308,7 @@ class PaksState extends State<Paks> {
   }
 }
 
+// navigate to the home page
 Future navigateToHome(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
 }

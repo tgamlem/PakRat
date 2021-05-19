@@ -15,6 +15,7 @@ class PakModal extends StatefulWidget {
 class _PakModalState extends State<PakModal> {
   @override
   Widget build(BuildContext context) {
+    // return a dialog with the modal
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -24,6 +25,7 @@ class _PakModalState extends State<PakModal> {
     );
   }
 
+  // the content of the dialog
   contentBox(context) {
     return Stack(
       children: [
